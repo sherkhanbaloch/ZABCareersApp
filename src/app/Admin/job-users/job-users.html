@@ -1,0 +1,68 @@
+<!-- Basic Bootstrap Table -->
+<div class="card">
+    <h5 class="card-header">Job Users</h5>
+    <div class="table-responsive text-nowrap">
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Mobile</th>
+                    <th>Resume</th>
+                    <th>Last Updated</th>
+                    <th>Verified</th>
+                    <th colspan="2" class="text-center">Actions</th>
+                </tr>
+            </thead>
+            <tbody class="table-border-bottom-0">
+                @if (ListofJobUsers().length > 0) {
+                @for (item of ListofJobUsers(); track item.candidateId) {
+                <tr>
+                    <td>{{item.candidateId}}</td>
+                    <td>{{item.candidateName}}</td>
+                    <td>{{item.candidateEmail}}</td>
+                    <td>{{item.candidateMobile}}</td>
+                    <td><a [href]="'https://localhost:7147/'+item.candidateResumeUrl">Resume</a></td>
+                    <td>{{item.resumeLastUpdated | date}}</td>
+                    <td>{{item.isEmailVerified}}</td>
+                    <td>
+                        <a (click)="GetRecordId(item.candidateId)" class="text-danger" data-bs-toggle="modal"
+                            data-bs-target="#DeleteModal"><i class="bx bx-trash me-1"></i>
+                            Delete</a>
+                    </td>
+                </tr>
+                }
+                }
+                @else
+                {
+                <tr>
+                    <td colspan="9" class="text-center text-danger">No Data Found.</td>
+                </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+<!--/ Basic Bootstrap Table -->
+
+<!-- Delete Modal -->
+<div class="modal fade" id="DeleteModal" data-bs-backdrop="static" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="backDropModalTitle">Confirm Deletion</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p class="mb-0">Are you sure you want to delete this Job? This action cannot be undone.</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">
+                    Close
+                </button>
+                <button type="button" class="btn btn-danger" (click)="DeleteJob()">Delete Job</button>
+            </div>
+        </div>
+    </div>
+</div>

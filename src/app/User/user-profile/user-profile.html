@@ -1,0 +1,88 @@
+<section class="contact-section">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4">
+                <div class="card" style="width: 18rem;">
+                    <img src="https://cdn-icons-png.flaticon.com/512/3135/3135715.png" class="card-img-top w-50 mx-auto" alt="...">
+                    <div class="card-body">
+                        <h5 class="card-title">{{UserProfileForm.controls.candidateName.value}}</h5>
+                        <p class="card-text text-success">🟢 Active</p>
+                    </div>
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item border"><a href="/user/profile" class="text-dark">Profile</a></li>
+                        <li class="list-group-item border">Applied Jobs</li>
+                        <li class="list-group-item border">Delete Account</li>
+                    </ul>
+                    <div class="card-body text-center">
+                        <a href="#" class="card-link text-danger">Log Out</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-8">
+                <form [formGroup]="UserProfileForm" (ngSubmit)="UpdateProfile()" class="form-contact contact_form"
+                    id="contactForm" novalidate="novalidate">
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="form-group">
+                                <label class="form-label">Name</label>
+                                <input class="form-control valid" id="name" type="text" onfocus="this.placeholder = ''"
+                                    onblur="this.placeholder = 'Enter your name'" placeholder="Enter your name"
+                                    formControlName="candidateName">
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label class="form-label">Email</label>
+                                <input class="form-control valid" id="email" type="email"
+                                    onfocus="this.placeholder = ''" onblur="this.placeholder = 'Enter email address'"
+                                    placeholder="Email" formControlName="candidateEmail">
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label class="form-label">Mobile</label>
+                                <input class="form-control" id="mobile" type="text" onfocus="this.placeholder = ''"
+                                    onblur="this.placeholder = 'Enter Mobile'" placeholder="Enter Mobile"
+                                    formControlName="candidateMobile">
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label class="form-label">View Resume</label>
+                                <br>
+                                <a [href]="'https://localhost:7147/'+UserProfileForm.controls.candidateResumeUrl.value"
+                                    class="btn">View Resume</a>
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label class="form-label">Upload New Resume</label>
+                                <input class="form-control" type="file" onfocus="this.placeholder = ''"
+                                    onblur="this.placeholder = 'Enter Resume'" placeholder="Enter Resume"
+                                    (change)="onFileChange($event)">
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label class="form-label">Password</label>
+                                <input class="form-control" id="password" type="password"
+                                    onfocus="this.placeholder = ''" onblur="this.placeholder = 'Enter Password'"
+                                    placeholder="Enter Password" formControlName="candidatePassword">
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label class="form-label">Resume Last Update</label>
+                                <input class="form-control" formControlName="resumeLastUpdated" readonly>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group mt-3 text-center">
+                        <button type="submit" class="button button-contactForm boxed-btn">Update
+                            Profile</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>

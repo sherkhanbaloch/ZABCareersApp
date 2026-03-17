@@ -1,0 +1,43 @@
+<!-- Basic Bootstrap Table -->
+<div class="card">
+    <h5 class="card-header">Job Applications</h5>
+    <div class="table-responsive text-nowrap">
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Job Title</th>
+                    <th>Department</th>
+                    <th>Published On</th>
+                    <th>Deadline</th>
+                    <th>Total Applications</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody class="table-border-bottom-0">
+                @if (ListofJobApplications().length > 0) {
+                @for (item of ListofJobApplications(); track item.jobId) {
+                <tr>
+                    <td>{{item.jobId}}</td>
+                    <td>{{item.jobTitle}}</td>
+                    <td>{{item.departmentName}}</td>
+                    <td>{{item.publishedOn | date}}</td>
+                    <td>{{item.applicationDeadline | date}}</td>
+                    <td>{{item.totalApplications}}</td>
+                    <td>
+                        <a [routerLink]="['/admin/job-application-details', item.jobId]" class="btn btn-primary">View Applications</a>
+                    </td>   
+                </tr>
+                }
+                }
+                @else
+                {
+                <tr>
+                    <td colspan="7" class="text-center text-danger">No Data Found.</td>
+                </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+<!--/ Basic Bootstrap Table -->

@@ -1,0 +1,56 @@
+<div class="row">
+    <div class="col-md-12">
+        <div class="card bg-primary text-white mb-3">
+            <div class="card-header">Job Details</div>
+            <div class="card-body">
+                <h5 class="card-title text-white">{{ListofJobApplications().at(0)?.jobTitle}}</h5>
+                <p class="card-text">Department: {{ListofJobApplications().at(0)?.departmentName}}</p>
+                <p class="card-text">Deadline: {{ListofJobApplications().at(0)?.applicationDeadline | date}}</p>
+                <p class="card-text">Total Applications {{ListofJobApplications().at(0)?.totalApplications}}</p>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Basic Bootstrap Table -->
+<div class="card">
+    <h5 class="card-header">Job Applications</h5>
+    <div class="table-responsive text-nowrap">
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Candidate Name</th>
+                    <th>Email</th>
+                    <th>Resume</th>
+                    <th>Match Score</th>
+                    <th>Status</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody class="table-border-bottom-0">
+                @if (ListofJobApplications().length > 0) {
+                @for (item of ListofJobApplications(); track item.jobId) {
+                <tr>
+                    <td>{{item.appliedJobId}}</td>
+                    <td>{{item.candidateName}}</td>
+                    <td>{{item.candidateEmail}}</td>
+                    <td><a [href]="'https://localhost:7147'+item.resumeUsedUrl">Resume</a></td>
+                    <td>{{item.matchedScore}}</td>
+                    <td>{{item.applicationStatus}}</td>
+                    <td>
+                        <a [routerLink]="['/admin/resume-analysis', item.appliedJobId]" class="btn btn-primary">Details</a>
+                    </td>
+                </tr>
+                }
+                }
+                @else
+                {
+                <tr>
+                    <td colspan="7" class="text-center text-danger">No Data Found.</td>
+                </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+<!--/ Basic Bootstrap Table -->

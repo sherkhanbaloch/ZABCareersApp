@@ -1,0 +1,140 @@
+@if (job() != null) {
+<!-- Hero Area Start-->
+<div class="slider-area ">
+    <div class="single-slider section-overly slider-height2 d-flex align-items-center"
+        data-background="/User/assets/img/hero/about.jpg">
+        <div class="container">
+            <div class="row">
+                <div class="col-xl-12">
+                    <div class="hero-cap text-center">
+                        <h2>{{job()?.jobTitle}}</h2>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Hero Area End -->
+<!-- job post company Start -->
+<div class="job-post-company pt-120 pb-120">
+    <div class="container">
+        <div class="row justify-content-between">
+            <!-- Left Content -->
+            <div class="col-xl-7 col-lg-8">
+                <!-- job single -->
+                <div class="single-job-items mb-50">
+                    <div class="job-items">
+                        <div class="company-img company-img-details">
+                            <a href="#"><img [src]="'https://localhost:7147/'+job()?.campusLogoUrl" width="85px"
+                                    class="border border-primary" alt=""></a>
+                        </div>
+                        <div class="job-tittle">
+                            <a href="#">
+                                <h4>{{job()?.jobTitle}}r</h4>
+                            </a>
+                            <ul>
+                                <li>{{job()?.departmentName}}</li>
+                                <li><i class="fas fa-map-marker-alt"></i>{{job()?.campusName}}</li>
+                                <li>{{job()?.salary}}</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <!-- job single End -->
+
+                <div class="job-post-details">
+                    <div class="post-details1 mb-50">
+                        <!-- Small Section Tittle -->
+                        <div class="small-section-tittle">
+                            <h4>Job Description</h4>
+                        </div>
+                        <p>{{job()?.jobDescription}}</p>
+                    </div>
+                    <div class="post-details2  mb-50">
+                        <!-- Small Section Tittle -->
+                        <div class="small-section-tittle">
+                            <!-- <h4>Required Knowledge, Skills, and Abilities</h4> -->
+                            <h4>Responsibilities</h4>
+                        </div>
+                        <ul>
+                            {{job()?.responsibilities}}
+                        </ul>
+                    </div>
+                    <div class="post-details2  mb-50">
+                        <!-- Small Section Tittle -->
+                        <div class="small-section-tittle">
+                            <h4>Education + Experience</h4>
+                        </div>
+                        <ul>
+                            {{job()?.educationAndExperience}}
+                        </ul>
+                    </div>
+                    <div class="post-details2  mb-50">
+                        <!-- Small Section Tittle -->
+                        <div class="small-section-tittle">
+                            <h4>Other Benifits</h4>
+                        </div>
+                        <ul>
+                            {{job()?.otherBenefits}}
+                        </ul>
+                    </div>
+                    <div class="post-details2  mb-50">
+                        <!-- Small Section Tittle -->
+                        <div class="small-section-tittle">
+                            <h4>Advertisement</h4>
+                        </div>
+                        <ul>
+                            <img [src]="'https://localhost:7147/'+job()?.featuredImageUrl" class="w-100" alt="">
+                        </ul>
+                    </div>
+                </div>
+
+            </div>
+            <!-- Right Content -->
+            <div class="col-xl-4 col-lg-4">
+                <div class="post-details3  mb-50">
+                    <!-- Small Section Tittle -->
+                    <div class="small-section-tittle">
+                        <h4>Job Overview</h4>
+                    </div>
+                    <ul>
+                        <li>Posted date : <span>{{job()?.publishedOn | date}}</span></li>
+                        <li>Location : <span>{{job()?.campusName}}</span></li>
+                        <li>Experience : <span>{{job()?.experience}}</span></li>
+                        <li>Gender : <span>{{job()?.gender}}</span></li>
+                        <li>Vacancy : <span>{{job()?.vacancy}}</span></li>
+                        <li>Job nature : <span>{{job()?.employmentStatus}}</span></li>
+                        <li>Salary : <span>{{job()?.salary}}</span></li>
+                        <li>Application date : <span>{{job()?.applicationDeadline | date}}</span></li>
+                    </ul>
+                    <div class="apply-btn2">
+                        @if (isApplied) {
+                        <button type="submit" class="btn" disabled>Applied</button>
+                        }
+                        @else{
+                        <button type="button" (click)="AddApplication()" class="btn">Apply Now</button>
+                        }
+                    </div>
+                </div>
+                <div class="post-details4  mb-50">
+                    <!-- Small Section Tittle -->
+                    <div class="small-section-tittle">
+                        <h4>Company Information</h4>
+                    </div>
+                    <span>SZABIST University Larkana Campus</span>
+                    <p>The Shaheed Zulfikar Ali Bhutto Institute of Science and Technology (SZABIST) Larkana Campus is a
+                        fully Chartered Institute established through a Legislative Act of the Sindh Assembly (Sindh Act
+                        No. XI of 1995) and is approved and recognized by the Higher Education Commission (HEC),
+                        Pakistan, as a degree-awarding institution.</p>
+                    <ul>
+                        <li>Name: <span>SZABIST Larkana </span></li>
+                        <li>Web : <span>lrk.szabist.edu.pk</span></li>
+                        <li>Email: <span>info@lrk.szabist.edu.pk</span></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- job post company End -->
+}

@@ -1,0 +1,66 @@
+<!-- Basic Bootstrap Table -->
+<div class="card">
+    <h5 class="card-header">Messages</h5>
+    <div class="table-responsive text-nowrap">
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Subject</th>
+                    <th>Message</th>
+                    <th>Status</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody class="table-border-bottom-0">
+                @if (ListofMessages().length > 0) {
+                @for (item of ListofMessages(); track item.messageId) {
+                <tr>
+                    <td>{{item.messageId}}</td>
+                    <td>{{item.name}}</td>
+                    <td>{{item.email}}</td>
+                    <td>{{item.subject}}</td>
+                    <td>{{item.messageText}}</td>
+                    <td><span class="badge bg-label-primary me-1">{{item.checkStatus}}</span></td>
+                    <td>
+                        <a (click)="GetRecordId(item.messageId)" class="text-danger" data-bs-toggle="modal"
+                            data-bs-target="#DeleteModal"><i class="bx bx-trash me-1"></i>
+                            Delete</a>
+                    </td>
+                </tr>
+                }
+                }
+                @else
+                {
+                <tr>
+                    <td colspan="7" class="text-center text-danger">No Data Found.</td>
+                </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+<!--/ Basic Bootstrap Table -->
+
+<!-- Delete Modal -->
+<div class="modal fade" id="DeleteModal" data-bs-backdrop="static" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="backDropModalTitle">Confirm Deletion</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p class="mb-0">Are you sure you want to delete this Message? This action cannot be undone.</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">
+                    Close
+                </button>
+                <button type="button" class="btn btn-danger" (click)="DeleteMessage()">Delete Message</button>
+            </div>
+        </div>
+    </div>
+</div>

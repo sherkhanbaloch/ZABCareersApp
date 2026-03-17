@@ -1,0 +1,35 @@
+<section class="contact-section">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <h2 class="contact-title text-center">Log In</h2>
+                <hr>
+            </div>
+            <div class="col-lg-6 mx-auto">
+                <form [formGroup]="LoginForm" (ngSubmit)="UserLogin()" class="form-contact contact_form" id="contactForm" novalidate="novalidate">
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="form-group">
+                                <label class="form-label">Email</label>
+                                <input class="form-control valid" id="email" type="email"
+                                    onfocus="this.placeholder = ''" onblur="this.placeholder = 'Enter email address'"
+                                    placeholder="Email" formControlName="userName">
+                            </div>
+                        </div>
+                        <div class="col-sm-12">
+                            <div class="form-group">
+                                <label class="form-label">Password</label>
+                                <input class="form-control" formControlName="password" id="password" type="password"
+                                    onfocus="this.placeholder = ''" onblur="this.placeholder = 'Enter Password'"
+                                    placeholder="Enter Password">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group mt-3 text-center">
+                        <button type="submit" class="button button-contactForm boxed-btn">Login</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>

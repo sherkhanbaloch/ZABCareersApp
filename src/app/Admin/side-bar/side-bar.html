@@ -1,0 +1,134 @@
+<aside id="layout-menu" class="layout-menu menu-vertical menu bg-menu-theme">
+  <div class="app-brand demo mb-3">
+    <a href="index.html" class="app-brand-link">
+      <span class="app-brand-logo demo">
+        <img src="/Admin/assets/img/logo/logo.png" width="3%" alt="">
+      </span>
+      <span class="app-brand-text demo menu-text fw-bolder ms-2"></span>
+    </a>
+
+    <a href="javascript:void(0);" class="layout-menu-toggle menu-link text-large ms-auto d-block d-xl-none">
+      <i class="bx bx-chevron-left bx-sm align-middle"></i>
+    </a>
+  </div>
+
+  <div class="menu-inner-shadow"></div>
+
+  <ul class="menu-inner py-1">
+    <!-- Dashboard -->
+    <li class="menu-item active">
+      <a routerLink="dashboard" class="menu-link">
+        <i class="menu-icon tf-icons bx bx-home-circle"></i>
+        <div data-i18n="Analytics">Dashboard</div>
+      </a>
+    </li>
+
+    <!-- Layouts -->
+    <li class="menu-item">
+      <a href="javascript:void(0);" class="menu-link menu-toggle">
+        <i class="menu-icon tf-icons bx bx-layout"></i>
+        <div data-i18n="Layouts">Jobs</div>
+      </a>
+
+      <ul class="menu-sub">
+        <li class="menu-item">
+          <a routerLink="all-jobs" class="menu-link">
+            <div data-i18n="Without menu">View All Jobs</div>
+          </a>
+        </li>
+        <li class="menu-item">
+          <a routerLink="add-new-job" class="menu-link">
+            <div data-i18n="Without navbar">Post New Job</div>
+          </a>
+        </li>
+      </ul>
+    </li>
+
+    <li class="menu-item">
+      <a href="javascript:void(0);" class="menu-link menu-toggle">
+        <i class="menu-icon tf-icons bx bx-lock-open-alt"></i>
+        <div data-i18n="Authentications">Applications</div>
+      </a>
+      <ul class="menu-sub">
+        <li class="menu-item">
+          <a routerLink="job-applications" class="menu-link">
+            <div data-i18n="Basic">View Job Applications</div>
+          </a>
+        </li>
+        <li class="menu-item">
+          <a routerLink="shortlisted-candidates" class="menu-link">
+            <div data-i18n="Basic">Shortlisted Applications</div>
+          </a>
+        </li>
+      </ul>
+    </li>
+    <li class="menu-item">
+      <a href="javascript:void(0);" class="menu-link menu-toggle">
+        <i class="menu-icon tf-icons bx bx-cube-alt"></i>
+        <div data-i18n="Misc">Others</div>
+      </a>
+      <ul class="menu-sub">
+        <li class="menu-item">
+          <a routerLink="campuses" class="menu-link">
+            <div data-i18n="Error">Campuses</div>
+          </a>
+        </li>
+        <li class="menu-item">
+          <a routerLink="departments" class="menu-link">
+            <div data-i18n="Under Maintenance">Departments</div>
+          </a>
+        </li>
+        <li class="menu-item">
+          <a routerLink="roles" class="menu-link">
+            <div data-i18n="Under Maintenance">Roles</div>
+          </a>
+        </li>
+        <li class="menu-item">
+          <a routerLink="portal-users" class="menu-link">
+            <div data-i18n="Under Maintenance">Portal Users</div>
+          </a>
+        </li>
+        <li class="menu-item">
+          <a routerLink="email-accounts" class="menu-link">
+            <div data-i18n="Under Maintenance">Email Accounts</div>
+          </a>
+        </li>
+      </ul>
+    </li>
+    <li class="menu-header small text-uppercase">
+      <span class="menu-header-text">Candidates</span>
+    </li>
+    <li class="menu-item">
+      <a href="javascript:void(0);" class="menu-link menu-toggle">
+        <i class="menu-icon tf-icons bx bx-dock-top"></i>
+        <div data-i18n="Account Settings">Job Users</div>
+      </a>
+      <ul class="menu-sub">
+        <li class="menu-item">
+          <a routerLink="job-users" class="menu-link">
+            <div data-i18n="Account">View Job Users</div>
+          </a>
+        </li>
+        <li class="menu-item">
+          <a routerLink="users-messages" class="menu-link">
+            <div data-i18n="Notifications">Users Queries</div>
+          </a>
+        </li>
+      </ul>
+    </li>
+    <!-- Misc -->
+    <li class="menu-header small text-uppercase"><span class="menu-header-text">Misc</span></li>
+    <li class="menu-item">
+      <a routerLink="error-404" class="menu-link">
+        <i class="menu-icon tf-icons bx bx-support"></i>
+        <div data-i18n="Support">Support</div>
+      </a>
+    </li>
+    <li class="menu-item">
+      <a routerLink="error-404" class="menu-link">
+        <i class="menu-icon tf-icons bx bx-file"></i>
+        <div data-i18n="Documentation">Documentation</div>
+      </a>
+    </li>
+  </ul>
+</aside>
