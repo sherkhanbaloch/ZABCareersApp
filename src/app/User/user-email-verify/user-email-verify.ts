@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-user-email-verify',
@@ -11,7 +12,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 })
 export class UserEmailVerify implements OnInit {
 
-  constructor(private route: ActivatedRoute, private router: Router, private http: HttpClient) {
+  constructor(private route: ActivatedRoute, private router: Router, private http: HttpClient, private toastr: ToastrService) {
   }
 
   ngOnInit(): void {
@@ -31,8 +32,7 @@ export class UserEmailVerify implements OnInit {
   // APIS Methods
 
   VerifyOTP(): void {
-
-      const model = {
+    const model = {
       email: this.UserEmail,
       otp: this.VerifyForm.value.OTPNumber
     };
@@ -40,11 +40,11 @@ export class UserEmailVerify implements OnInit {
     this.http.post<any>('https://localhost:7147/api/Auth/UserOTPVerify', model).subscribe(
       {
         next: (res) => {
-          console.log("OTP Verified Successfully.");
-          this.router.navigate(['/user/user-login'])
+          this.toastr.success("OTP Verified.", 'Success', { closeButton: true });
+          this.router.navigate(['/user/user-login']);
         },
-        error: (res) => {
-          console.log("Error - OTP Failed." + res)
+        error: (err) => {
+          this.toastr.error("Error - " + err.error, 'Error', { closeButton: true });
         }
       }
     );

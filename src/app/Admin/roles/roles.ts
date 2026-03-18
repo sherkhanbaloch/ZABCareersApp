@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit, signal } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-roles',
@@ -10,7 +11,7 @@ import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 })
 export class Roles implements OnInit {
 
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient, private toastr: ToastrService) {
   }
 
   ngOnInit(): void {
@@ -41,8 +42,8 @@ export class Roles implements OnInit {
         next: (res) => {
           this.ListofRoles.set(res);
         },
-        error: (res) => {
-          console.log("Error - Data Fetch Failed." + res);
+        error: (err) => {
+          this.toastr.error("Error - " + err.error, 'Error', { closeButton: true });
         }
       }
     );
@@ -52,12 +53,12 @@ export class Roles implements OnInit {
     this.http.post('https://localhost:7147/api/Roles/AddRole/', this.AddRoleForm.value).subscribe(
       {
         next: (res) => {
-          console.log("Role Added Successfully.");
+          this.toastr.success("Role Added.", 'Success', { closeButton: true });
           this.ShowAllRoles();
           this.ResetData();
         },
-        error: (res) => {
-          console.log("Error - Role Added Failed." + res)
+        error: (err) => {
+          this.toastr.error("Error - " + err.error, 'Error', { closeButton: true });
         }
       }
     );
@@ -75,8 +76,8 @@ export class Roles implements OnInit {
           const ResData = res;
           this.EditRoleForm.patchValue(ResData);
         },
-        error: (res) => {
-          console.log("Error - Record Not Found." + res);
+        error: (err) => {
+          this.toastr.error("Error - " + err.error, 'Error', { closeButton: true });
         }
       }
     );
@@ -86,12 +87,12 @@ export class Roles implements OnInit {
     this.http.put(`https://localhost:7147/api/Roles/UpdateRole/${this.RoleId}`, this.EditRoleForm.value).subscribe(
       {
         next: (res) => {
-          console.log("Role Updated Successfully.");
+          this.toastr.success("Role Updated.", 'Success', { closeButton: true });
           this.ShowAllRoles();
           this.ResetData();
         },
-        error: (res) => {
-          console.log("Error - Role Updated Failed." + res)
+        error: (err) => {
+          this.toastr.error("Error - " + err.error, 'Error', { closeButton: true });
         }
       }
     );
@@ -101,11 +102,11 @@ export class Roles implements OnInit {
     this.http.delete(`https://localhost:7147/api/Roles/DeleteRole/${this.RoleId}`).subscribe(
       {
         next: (res) => {
-          console.log("Record Deleted.");
+          this.toastr.success("Role Deleted.", 'Success', { closeButton: true });
           this.ShowAllRoles();
         },
-        error: (res) => {
-          console.log("Error - Record Not Deleted." + res);
+        error: (err) => {
+          this.toastr.error("Error - " + err.error, 'Error', { closeButton: true });
         }
       }
     );

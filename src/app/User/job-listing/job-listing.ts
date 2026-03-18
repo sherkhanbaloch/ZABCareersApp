@@ -2,6 +2,7 @@ import { DatePipe } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit, signal } from '@angular/core';
 import { RouterLink } from "@angular/router";
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-job-listing',
@@ -11,7 +12,7 @@ import { RouterLink } from "@angular/router";
 })
 export class JobListing implements OnInit {
 
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient, private toastr: ToastrService) {
   }
 
   ngOnInit(): void {
@@ -28,8 +29,8 @@ export class JobListing implements OnInit {
         next: (res) => {
           this.ListofJobs.set(res);
         },
-        error: (res) => {
-          console.log("Error - Data Fetch Failed." + res);
+        error: (err) => {
+           this.toastr.error("Error - " + err.error, 'Error', { closeButton: true });
         }
       }
     );

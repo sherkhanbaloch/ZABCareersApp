@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit, signal } from '@angular/core';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-users-messages',
@@ -9,7 +10,7 @@ import { Component, OnInit, signal } from '@angular/core';
 })
 export class UsersMessages implements OnInit {
 
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient, private toastr: ToastrService) {
   }
 
   ngOnInit(): void {
@@ -27,8 +28,8 @@ export class UsersMessages implements OnInit {
         next: (res) => {
           this.ListofMessages.set(res);
         },
-        error: (res) => {
-          console.log("Error - Messages Fetch Failed." + res);
+        error: (err) => {
+          this.toastr.error("Error - " + err.error, 'Error', { closeButton: true });
         }
       }
     );
@@ -42,11 +43,11 @@ export class UsersMessages implements OnInit {
     this.http.delete(`https://localhost:7147/api/Messages/DeleteMessage/${this.MessageId}`).subscribe(
       {
         next: (res) => {
-          console.log("Record Deleted.");
+          this.toastr.success("Message Deleted.", 'Success', { closeButton: true });
           this.ShowAllMessages();
         },
-        error: (res) => {
-          console.log("Error - Record Not Deleted." + res);
+        error: (err) => {
+          this.toastr.error("Error - " + err.error, 'Error', { closeButton: true });
         }
       }
     );

@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit, signal } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-email-accounts',
@@ -10,7 +11,7 @@ import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 })
 export class EmailAccounts implements OnInit {
 
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient, private toastr: ToastrService) {
   }
 
   ngOnInit(): void {
@@ -49,8 +50,8 @@ export class EmailAccounts implements OnInit {
         next: (res) => {
           this.ListofEmails.set(res);
         },
-        error: (res) => {
-          console.log("Error - Data Fetch Failed." + res);
+        error: (err) => {
+          this.toastr.error("Error - " + err.error, 'Error', { closeButton: true });
         }
       }
     );
@@ -60,12 +61,12 @@ export class EmailAccounts implements OnInit {
     this.http.post('https://localhost:7147/api/EmailAccount/AddEmail/', this.AddEmailForm.value).subscribe(
       {
         next: (res) => {
-          console.log("Email Added Successfully.");
+          this.toastr.success("Email Added", 'Success', { closeButton: true });
           this.ShowAllEmails();
           this.ResetData();
         },
-        error: (res) => {
-          console.log("Error - Email Added Failed." + res)
+        error: (err) => {
+          this.toastr.error("Error - " + err.error, 'Error', { closeButton: true });
         }
       }
     );
@@ -83,8 +84,8 @@ export class EmailAccounts implements OnInit {
           const ResData = res;
           this.EditEmailForm.patchValue(ResData);
         },
-        error: (res) => {
-          console.log("Error - Record Not Found." + res);
+        error: (err) => {
+          this.toastr.error("Error - " + err.error, 'Error', { closeButton: true });
         }
       }
     );
@@ -94,12 +95,12 @@ export class EmailAccounts implements OnInit {
     this.http.put(`https://localhost:7147/api/EmailAccount/UpdateEmail/${this.EmailId}`, this.EditEmailForm.value).subscribe(
       {
         next: (res) => {
-          console.log("Email Updated Successfully.");
+          this.toastr.success("Email Updated.", 'Success', { closeButton: true });
           this.ShowAllEmails();
           this.ResetData();
         },
-        error: (res) => {
-          console.log("Error - Email Updated Failed." + res)
+        error: (err) => {
+          this.toastr.error("Error - " + err.error, 'Error', { closeButton: true });
         }
       }
     );
@@ -109,11 +110,11 @@ export class EmailAccounts implements OnInit {
     this.http.delete(`https://localhost:7147/api/EmailAccount/DeleteEmail/${this.EmailId}`).subscribe(
       {
         next: (res) => {
-          console.log("Record Deleted.");
+          this.toastr.success("Email Deleted.", 'Success', { closeButton: true });
           this.ShowAllEmails();
         },
-        error: (res) => {
-          console.log("Error - Record Not Deleted." + res);
+        error: (err) => {
+          this.toastr.error("Error - " + err.error, 'Error', { closeButton: true });
         }
       }
     );

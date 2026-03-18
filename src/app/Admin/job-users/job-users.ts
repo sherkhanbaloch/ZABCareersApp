@@ -1,6 +1,7 @@
 import { DatePipe } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit, signal } from '@angular/core';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-job-users',
@@ -10,7 +11,7 @@ import { Component, OnInit, signal } from '@angular/core';
 })
 export class JobUsers implements OnInit {
 
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient, private toastr: ToastrService) {
   }
 
   ngOnInit(): void {
@@ -28,8 +29,8 @@ export class JobUsers implements OnInit {
         next: (res) => {
           this.ListofJobUsers.set(res);
         },
-        error: (res) => {
-          console.log("Error - Data Fetch Failed." + res);
+        error: (err) => {
+           this.toastr.error("Error - " + err.error, 'Error', { closeButton: true });
         }
       }
     );
@@ -43,11 +44,11 @@ export class JobUsers implements OnInit {
     this.http.delete(`https://localhost:7147/api/Candidates/DeleteCandidate/${this.UserId}`).subscribe(
       {
         next: (res) => {
-          console.log("Record Deleted.");
+           this.toastr.success("Candidate Deleted.", 'Success', { closeButton: true });
           this.ShowAllJobs();
         },
-        error: (res) => {
-          console.log("Error - Record Not Deleted." + res);
+        error: (err) => {
+           this.toastr.error("Error - " + err.error, 'Error', { closeButton: true });
         }
       }
     );

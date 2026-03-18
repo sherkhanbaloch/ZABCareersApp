@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Component } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-contact',
@@ -10,7 +11,7 @@ import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 })
 export class Contact {
 
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient, private toastr: ToastrService) {
   }
 
   AddMessageForm = new FormGroup(
@@ -27,11 +28,11 @@ export class Contact {
     this.http.post('https://localhost:7147/api/Messages/AddMessage/', this.AddMessageForm.value).subscribe(
       {
         next: (res) => {
-          console.log("Message Added Successfully.");
+          this.toastr.success("Message Sent.", 'Success', { closeButton: true });
           this.ResetData();
         },
-        error: (res) => {
-          console.log("Error - Message Added Failed." + res)
+        error: (err) => {
+          this.toastr.error("Error - " + err.error, 'Error', { closeButton: true });
         }
       }
     );

@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Component, signal } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { AuthService } from '../../services/auth-service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-user-profile',
@@ -12,7 +13,7 @@ import { AuthService } from '../../services/auth-service';
 })
 export class UserProfile {
 
-  constructor(private http: HttpClient, private auth: AuthService) {
+  constructor(private http: HttpClient, private auth: AuthService, private toastr: ToastrService) {
 
   }
 
@@ -51,8 +52,8 @@ export class UserProfile {
           const ResData = res;
           this.UserProfileForm.patchValue(ResData);
         },
-        error: (res) => {
-          console.log("Error - Record Not Found." + res);
+        error: (err) => {
+          this.toastr.error("Error - " + err.error, 'Error', { closeButton: true });
         }
       }
     );
@@ -76,10 +77,10 @@ export class UserProfile {
     this.http.put(`https://localhost:7147/api/Candidates/UpdateCandidate/${this.UserId}`, formData)
       .subscribe({
         next: (res) => {
-          console.log("User Updated Successfully.");
+          this.toastr.success("Profile Updated.", 'Success', { closeButton: true });
         },
-        error: (res) => {
-          console.log("Error - User Updated Failed." + res)
+        error: (err) => {
+          this.toastr.error("Error - " + err.error, 'Error', { closeButton: true });
         }
       });
   }

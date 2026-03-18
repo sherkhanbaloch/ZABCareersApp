@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit, signal } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-portal-users',
@@ -10,7 +11,7 @@ import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 })
 export class PortalUsers implements OnInit {
 
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient, private toastr: ToastrService) {
   }
 
   ngOnInit(): void {
@@ -55,8 +56,8 @@ export class PortalUsers implements OnInit {
         next: (res) => {
           this.ListofRoles.set(res);
         },
-        error: (res) => {
-          console.log("Error - Roles Fetch Failed." + res);
+        error: (err) => {
+          this.toastr.error("Error - " + err.error, 'Error', { closeButton: true });
         }
       }
     );
@@ -68,8 +69,8 @@ export class PortalUsers implements OnInit {
         next: (res) => {
           this.ListofCampuses.set(res);
         },
-        error: (res) => {
-          console.log("Error - Campuses Fetch Failed." + res);
+        error: (err) => {
+          this.toastr.error("Error - " + err.error, 'Error', { closeButton: true });
         }
       }
     );
@@ -81,8 +82,8 @@ export class PortalUsers implements OnInit {
         next: (res) => {
           this.ListofUsers.set(res);
         },
-        error: (res) => {
-          console.log("Error - Data Fetch Failed." + res);
+        error: (err) => {
+          this.toastr.error("Error - " + err.error, 'Error', { closeButton: true });
         }
       }
     );
@@ -92,12 +93,12 @@ export class PortalUsers implements OnInit {
     this.http.post('https://localhost:7147/api/Users/AddUser/', this.AddUserForm.value).subscribe(
       {
         next: (res) => {
-          console.log("User Added Successfully.");
+          this.toastr.success("User Added.", 'Success', { closeButton: true });
           this.ShowAllUsers();
           this.ResetData();
         },
-        error: (res) => {
-          console.log("Error - User Added Failed." + res)
+        error: (err) => {
+          this.toastr.error("Error - " + err.error, 'Error', { closeButton: true });
         }
       }
     );
@@ -115,8 +116,8 @@ export class PortalUsers implements OnInit {
           const ResData = res;
           this.EditUserForm.patchValue(ResData);
         },
-        error: (res) => {
-          console.log("Error - Record Not Found." + res);
+        error: (err) => {
+           this.toastr.error("Error - " + err.error, 'Error', { closeButton: true });
         }
       }
     );
@@ -126,12 +127,12 @@ export class PortalUsers implements OnInit {
     this.http.put(`https://localhost:7147/api/Users/UpdateUser/${this.UserId}`, this.EditUserForm.value).subscribe(
       {
         next: (res) => {
-          console.log("User Updated Successfully.");
+          this.toastr.success("User Updated.", 'Success', { closeButton: true });
           this.ShowAllUsers();
           this.ResetData();
         },
-        error: (res) => {
-          console.log("Error - User Updated Failed." + res)
+        error: (err) => {
+           this.toastr.error("Error - " + err.error, 'Error', { closeButton: true });
         }
       }
     );
@@ -141,11 +142,11 @@ export class PortalUsers implements OnInit {
     this.http.delete(`https://localhost:7147/api/Users/DeleteUser/${this.UserId}`).subscribe(
       {
         next: (res) => {
-          console.log("Record Deleted.");
+           this.toastr.success("User Deleted.", 'Success', { closeButton: true });
           this.ShowAllUsers();
         },
-        error: (res) => {
-          console.log("Error - Record Not Deleted." + res);
+        error: (err) => {
+           this.toastr.error("Error - " + err.error, 'Error', { closeButton: true });
         }
       }
     );

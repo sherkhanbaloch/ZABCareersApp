@@ -1,8 +1,9 @@
 import { HttpClient } from '@angular/common/http';
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthService } from '../../services/auth-service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-admin-login',
@@ -12,8 +13,7 @@ import { AuthService } from '../../services/auth-service';
 })
 export class AdminLogin {
 
-
-  constructor(private http: HttpClient, private router: Router, private auth: AuthService) {
+  constructor(private http: HttpClient, private router: Router, private auth: AuthService, private toastr: ToastrService) {
   }
 
   LoginForm = new FormGroup(
@@ -28,12 +28,10 @@ export class AdminLogin {
       {
         next: (res) => {
           this.auth.setToken(res);
-          console.log(res);
           this.router.navigate(['/admin/dashboard']);
-
         },
-        error: (res) => {
-          console.log("Error - Login Failed." + res)
+        error: (err) => {
+          this.toastr.error("Error - " + err.error, 'Error', { closeButton: true });
         }
       }
     );

@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit, signal } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-departments',
@@ -10,7 +11,7 @@ import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 })
 export class Departments implements OnInit {
 
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient, private toastr: ToastrService) {
   }
 
   ngOnInit(): void {
@@ -41,8 +42,8 @@ export class Departments implements OnInit {
         next: (res) => {
           this.ListofDepartments.set(res);
         },
-        error: (res) => {
-          console.log("Error - Data Fetch Failed." + res);
+        error: (err) => {
+          this.toastr.error("Error - " + err.error, 'Error', { closeButton: true });
         }
       }
     );
@@ -52,12 +53,12 @@ export class Departments implements OnInit {
     this.http.post('https://localhost:7147/api/Departments/AddDepartment/', this.AddDepartmentForm.value).subscribe(
       {
         next: (res) => {
-          console.log("Department Added Successfully.");
+          this.toastr.success("Department Added.", 'Success', { closeButton: true });
           this.ShowAllDepartments();
           this.ResetData();
         },
-        error: (res) => {
-          console.log("Error - Department Added Failed." + res)
+        error: (err) => {
+          this.toastr.error("Error - " + err.error, 'Error', { closeButton: true });
         }
       }
     );
@@ -75,8 +76,8 @@ export class Departments implements OnInit {
           const ResData = res;
           this.EditDepartmentForm.patchValue(ResData);
         },
-        error: (res) => {
-          console.log("Error - Record Not Found." + res);
+        error: (err) => {
+          this.toastr.error("Error - " + err.error, 'Error', { closeButton: true });
         }
       }
     );
@@ -86,12 +87,12 @@ export class Departments implements OnInit {
     this.http.put(`https://localhost:7147/api/Departments/UpdateDepartment/${this.DepartmentId}`, this.EditDepartmentForm.value).subscribe(
       {
         next: (res) => {
-          console.log("Department Updated Successfully.");
+          this.toastr.success("Department Updated.", 'Success', { closeButton: true });
           this.ShowAllDepartments();
           this.ResetData();
         },
-        error: (res) => {
-          console.log("Error - Department Updated Failed." + res)
+        error: (err) => {
+          this.toastr.error("Error - " + err.error, 'Error', { closeButton: true });
         }
       }
     );
@@ -101,11 +102,11 @@ export class Departments implements OnInit {
     this.http.delete(`https://localhost:7147/api/Departments/DeleteDepartment/${this.DepartmentId}`).subscribe(
       {
         next: (res) => {
-          console.log("Record Deleted.");
+          this.toastr.success("Department Deleted.", 'Success', { closeButton: true });
           this.ShowAllDepartments();
         },
-        error: (res) => {
-          console.log("Error - Record Not Deleted." + res);
+        error: (err) => {
+           this.toastr.error("Error - " + err.error, 'Error', { closeButton: true });
         }
       }
     );

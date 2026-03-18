@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { publishFacade } from '@angular/compiler';
 import { Component, OnInit, signal } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-add-new-job',
@@ -11,7 +12,7 @@ import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 })
 export class AddNewJob {
 
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient, private toastr: ToastrService) {
   }
 
   ngOnInit(): void {
@@ -59,8 +60,8 @@ export class AddNewJob {
         next: (res) => {
           this.ListofDepartments.set(res);
         },
-        error: (res) => {
-          console.log("Error - Department Fetch Failed." + res);
+        error: (err) => {
+          this.toastr.error("Error - " + err.error, 'Error', { closeButton: true });
         }
       }
     );
@@ -72,8 +73,8 @@ export class AddNewJob {
         next: (res) => {
           this.ListofCampuses.set(res);
         },
-        error: (res) => {
-          console.log("Error - Campuses Fetch Failed." + res);
+        error: (err) => {
+          this.toastr.error("Error - " + err.error, 'Error', { closeButton: true });
         }
       }
     );
@@ -103,11 +104,11 @@ export class AddNewJob {
     this.http.post('https://localhost:7147/api/Jobs/AddJob/', formData)
       .subscribe({
         next: (res) => {
-          console.log("Job Added Successfully.");
+          this.toastr.success("Job Added.", 'Success', { closeButton: true });
           this.ResetData();
         },
-        error: (res) => {
-          console.log("Error - Job Added Failed." + res)
+        error: (err) => {
+          this.toastr.error("Error - " + err.error, 'Error', { closeButton: true });
         }
       });
   }

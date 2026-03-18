@@ -2,6 +2,7 @@ import { DatePipe } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit, signal } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-resume-analysis',
@@ -11,13 +12,12 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class ResumeAnalysis implements OnInit {
 
-  constructor(private route: ActivatedRoute, private http: HttpClient) {
+  constructor(private route: ActivatedRoute, private http: HttpClient, private toastr: ToastrService) {
   }
 
   ngOnInit(): void {
 
     this.ApplyJobId = Number(this.route.snapshot.paramMap.get('appliedJobId'));
-
     this.GetResumeAnalysis(this.ApplyJobId);
   }
 
@@ -32,10 +32,9 @@ export class ResumeAnalysis implements OnInit {
       {
         next: (res) => {
           this.resumeDetails.set(res);
-          console.log(this.resumeDetails);
         },
-        error: (res) => {
-          console.log("Error - Record Not Found." + res);
+        error: (err) => {
+          this.toastr.error("Error - " + err.error, 'Error', { closeButton: true });
         }
       }
     );
@@ -46,12 +45,12 @@ export class ResumeAnalysis implements OnInit {
     this.http.put(`https://localhost:7147/api/AppliedJob/ChangeApplicationStatus/${this.ApplyJobId}/${status}`, {}).subscribe(
       {
         next: (res) => {
-          console.log("Status Updated Successfully.");
+          this.toastr.success("Application Status Updated.", 'Success', { closeButton: true });
           this.GetResumeAnalysis(this.ApplyJobId);
           this.SendEmail(status);
         },
-        error: (res) => {
-          console.log("Error - Status Not Updated" + res);
+        error: (err) => {
+          this.toastr.error("Error - " + err.error, 'Error', { closeButton: true });
         }
       }
     );
@@ -83,10 +82,10 @@ export class ResumeAnalysis implements OnInit {
     this.http.post('https://localhost:7147/api/EmailAccount/SendEmail/', model).subscribe(
       {
         next: (res) => {
-          console.log("Email Sent Successfully.");
+          this.toastr.success("Email Sent To Candidate.", 'Success', { closeButton: true });
         },
-        error: (res) => {
-          console.log("Error - Email Sent Failed." + res)
+        error: (err) => {
+          this.toastr.error("Error - " + err.error, 'Error', { closeButton: true });
         }
       }
     );

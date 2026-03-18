@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit, signal } from '@angular/core';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-dashboard',
@@ -9,11 +10,10 @@ import { Component, OnInit, signal } from '@angular/core';
 })
 export class Dashboard implements OnInit {
 
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient, private toastr: ToastrService) {
   }
 
   ngOnInit(): void {
-
     this.GetDashboardData();
   }
 
@@ -26,10 +26,9 @@ export class Dashboard implements OnInit {
       {
         next: (res) => {
           this.data.set(res);
-          console.log(this.data);
         },
-        error: (res) => {
-          console.log("Error - Record Not Found." + res);
+        error: (err) => {
+           this.toastr.error("Error - " + err.error, 'Error', { closeButton: true });
         }
       }
     );

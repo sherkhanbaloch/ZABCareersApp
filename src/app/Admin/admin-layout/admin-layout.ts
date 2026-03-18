@@ -5,6 +5,7 @@ import { NavigationEnd, Router, RouterOutlet } from '@angular/router';
 import { ScriptLoaderService } from '../../services/script-loader-service';
 import { filter } from 'rxjs';
 import { AuthService } from '../../services/auth-service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-admin-layout',
@@ -61,7 +62,6 @@ export class AdminLayout implements OnInit {
 
   AdminLogout() {
     this.auth.logout();
-    console.log("Logout Successfull.");
     this.router.navigate(['/admin/login']);
   }
 

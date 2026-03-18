@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Component } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-register-user',
@@ -11,7 +12,7 @@ import { Router } from '@angular/router';
 })
 export class RegisterUser {
 
-  constructor(private http: HttpClient, private router: Router) {
+  constructor(private http: HttpClient, private router: Router, private toastr: ToastrService) {
   }
 
   AddUserForm = new FormGroup(
@@ -50,11 +51,11 @@ export class RegisterUser {
     this.http.post('https://localhost:7147/api/Candidates/AddCandidate/', formData)
       .subscribe({
         next: (res) => {
-          console.log("User Added Successfully.");
+          this.toastr.success("User Registered. Verify Your Email.", 'Success', { closeButton: true });
           this.router.navigate(['/user/user-email-verify'], { queryParams: { email: this.AddUserForm.get('candidateEmail')?.value } });
         },
-        error: (res) => {
-          console.log("Error - User Added Failed." + res.error)
+        error: (err) => {
+          this.toastr.error("Error - " + err.error, 'Error', { closeButton: true });
         }
       });
   }

@@ -4,6 +4,7 @@ import { Component, OnInit, signal } from '@angular/core';
 import { FormControl, FormControlName, FormGroup } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService } from '../../services/auth-service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-job-details',
@@ -13,7 +14,7 @@ import { AuthService } from '../../services/auth-service';
 })
 export class JobDetails implements OnInit {
 
-  constructor(private route: ActivatedRoute, private router: Router, private http: HttpClient, private auth: AuthService) {
+  constructor(private route: ActivatedRoute, private router: Router, private http: HttpClient, private auth: AuthService, private toastr: ToastrService) {
   }
 
   ngOnInit(): void {
@@ -38,27 +39,24 @@ export class JobDetails implements OnInit {
       {
         next: (res) => {
           this.job.set(res);
-          console.log(this.job);
         },
-        error: (res) => {
-          console.log("Error - Record Not Found." + res);
+        error: (err) => {
+          this.toastr.error("Error - " + err.error, 'Error', { closeButton: true });
         }
       }
     );
   }
 
   CheckIsApplied(): void {
-
     this.http.get<boolean>(`https://localhost:7147/api/AppliedJob/GetIsJobApplied/${this.JobId}/${this.UserId}`)
       .subscribe({
         next: (res) => {
           this.isApplied = res;
         },
-        error: () => {
+        error: (err) => {
           this.isApplied = false;
         }
       });
-
   }
 
   AddApplication(): void {
@@ -71,16 +69,15 @@ export class JobDetails implements OnInit {
     this.http.post('https://localhost:7147/api/AppliedJob/AddApplication', model).subscribe(
       {
         next: (res) => {
-          console.log("Job Applied Successfully");
+          this.toastr.success("Job Applied", 'Success', { closeButton: true });
           this.router.navigate([`user/job-details/${this.JobId}`]);
           this.CheckIsApplied();
         },
         error: (err) => {
-          console.log("Error:", err);
+          this.toastr.error("Error - " + err.error, 'Error', { closeButton: true });
         }
       });
   }
-
 
 }
 
@@ -108,7 +105,6 @@ export interface JobDetails {
   campusName: string;
   campusLogoUrl: string;
 }
-
 
 export interface IsAppliedVM {
   appliedJobId: number,

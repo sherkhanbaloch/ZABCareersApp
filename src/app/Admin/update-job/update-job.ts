@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Component, OnInit, signal } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-update-job',
@@ -11,7 +12,7 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class UpdateJob implements OnInit {
 
-  constructor(private route: ActivatedRoute, private http: HttpClient) {
+  constructor(private route: ActivatedRoute, private http: HttpClient, private toastr: ToastrService) {
   }
 
   ngOnInit(): void {
@@ -67,8 +68,8 @@ export class UpdateJob implements OnInit {
         next: (res) => {
           this.ListofDepartments.set(res);
         },
-        error: (res) => {
-          console.log("Error - Department Fetch Failed." + res);
+        error: (err) => {
+          this.toastr.error("Error - " + err.error, 'Error', { closeButton: true });
         }
       }
     );
@@ -80,8 +81,8 @@ export class UpdateJob implements OnInit {
         next: (res) => {
           this.ListofCampuses.set(res);
         },
-        error: (res) => {
-          console.log("Error - Campuses Fetch Failed." + res);
+        error: (err) => {
+          this.toastr.error("Error - " + err.error, 'Error', { closeButton: true });
         }
       }
     );
@@ -94,10 +95,9 @@ export class UpdateJob implements OnInit {
         next: (res) => {
           const ResData = res;
           this.EditJobForm.patchValue(ResData);
-          console.log(ResData);
         },
-        error: (res) => {
-          console.log("Error - Record Not Found." + res);
+        error: (err) => {
+          this.toastr.error("Error - " + err.error, 'Error', { closeButton: true });
         }
       }
     );
@@ -128,11 +128,11 @@ export class UpdateJob implements OnInit {
     this.http.put(`https://localhost:7147/api/Jobs/UpdateJob/${this.JobId}`, formData)
       .subscribe({
         next: (res) => {
-          console.log("Job Updated Successfully.");
+          this.toastr.success("Job Updated.", 'Success', { closeButton: true });
           this.ResetData();
         },
-        error: (res) => {
-          console.log("Error - Job Updated Failed." + res)
+        error: (err) => {
+          this.toastr.error("Error - " + err.error, 'Error', { closeButton: true });
         }
       });
   }

@@ -2,6 +2,7 @@ import { DatePipe } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit, Pipe, signal } from '@angular/core';
 import { RouterLink } from "@angular/router";
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-all-jobs',
@@ -11,7 +12,7 @@ import { RouterLink } from "@angular/router";
 })
 export class AllJobs implements OnInit {
 
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient, private toastr: ToastrService) {
   }
 
   ngOnInit(): void {
@@ -29,8 +30,8 @@ export class AllJobs implements OnInit {
         next: (res) => {
           this.ListofJobs.set(res);
         },
-        error: (res) => {
-          console.log("Error - Data Fetch Failed." + res);
+        error: (err) => {
+          this.toastr.error("Error - " + err.error, 'Error', { closeButton: true });
         }
       }
     );
@@ -44,7 +45,7 @@ export class AllJobs implements OnInit {
     this.http.delete(`https://localhost:7147/api/Jobs/DeleteJob/${this.JobId}`).subscribe(
       {
         next: (res) => {
-          console.log("Record Deleted.");
+          this.toastr.success("Job Deleted.", 'Success', { closeButton: true });
           this.ShowAllJobs();
         },
         error: (res) => {
