@@ -32,6 +32,12 @@ export class UserLogin {
         },
         error: (err) => {
           this.toastr.error("Error - " + err.error, 'Error', { closeButton: true });
+
+          // Redirect For OTP If Email Is Not Verified.
+          if (err.error == "Email Not Verified.") {
+            this.router.navigate(['/user/user-email-verify'], { queryParams: { email: this.LoginForm.get('userName')?.value } });
+          }
+
         }
       }
     );

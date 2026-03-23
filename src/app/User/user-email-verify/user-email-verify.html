@@ -3,16 +3,19 @@
         <div class="row">
             <div class="col-12">
                 <h2 class="contact-title text-center">User Email Verification</h2>
+                <p class="text-center">We Have Sent You The OTP. Check Your Email Inbox.</p>
                 <hr>
             </div>
             <div class="col-lg-10 mx-auto">
-                <form [formGroup]="VerifyForm" (ngSubmit)="VerifyOTP()" class="form-contact contact_form" id="contactForm" novalidate="novalidate">
+                <form [formGroup]="VerifyForm" (ngSubmit)="VerifyOTP()" class="form-contact contact_form"
+                    id="contactForm" novalidate="novalidate">
                     <div class="row">
                         <div class="col-md-6 mx-auto">
                             <div class="form-group">
                                 <label class="form-label">Enter OTP</label>
                                 <input class="form-control valid" id="name" type="text" onfocus="this.placeholder = ''"
-                                    onblur="this.placeholder = 'Enter OTP'" placeholder="Enter OTP" formControlName="OTPNumber">
+                                    onblur="this.placeholder = 'Enter OTP'" placeholder="Enter OTP"
+                                    formControlName="OTPNumber" required>
                             </div>
                         </div>
                     </div>

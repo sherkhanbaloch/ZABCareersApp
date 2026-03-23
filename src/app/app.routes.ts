@@ -26,11 +26,17 @@ import { ResumeAnalysis } from './Admin/resume-analysis/resume-analysis';
 import { EmailAccounts } from './Admin/email-accounts/email-accounts';
 import { UserEmailVerify } from './User/user-email-verify/user-email-verify';
 import { authGuard } from './services/auth-guard';
+import { Error404 } from './Admin/error404/error404';
 
 export const routes: Routes = [
 
+    // Default Route (User Side)
+    { path: '', redirectTo: 'user/home', pathMatch: 'full' },
+
+    // User Routes
     {
         path: 'user', component: UserLayout, children: [
+            { path: '', redirectTo: 'home', pathMatch: 'full' },
             { path: 'home', component: Home, title: 'Home - ZAB Careers' },
             { path: 'about', component: About, title: 'About - ZAB Careers' },
             { path: 'contact', component: Contact, title: 'Contact - ZAB Careers' },
@@ -43,10 +49,12 @@ export const routes: Routes = [
         ]
     },
 
+    // Admin  Routes
     { path: 'admin/login', component: AdminLogin, title: 'Admin Login - ZAB Careers' },
 
     {
-        path: 'admin', component: AdminLayout, children: [
+        path: 'admin', component: AdminLayout, canActivate: [authGuard], children: [
+            { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
             { path: 'dashboard', component: Dashboard, title: 'Dashboard - ZAB Careers', canActivate: [authGuard] },
             { path: 'job-applications', component: JobApplications, title: 'Job Applications - ZAB Careers', canActivate: [authGuard] },
             { path: 'job-application-details/:jobId', component: JobApplicationDetails, title: 'Job Application Details - ZAB Careers', canActivate: [authGuard] },
@@ -58,13 +66,13 @@ export const routes: Routes = [
             { path: 'add-new-job', component: AddNewJob, title: 'Add New Job - ZAB Careers', canActivate: [authGuard] },
             { path: 'resume-analysis/:appliedJobId', component: ResumeAnalysis, title: 'Resume Analysis - ZAB Careers', canActivate: [authGuard] },
             { path: 'roles', component: Roles, title: 'Roles - ZAB Careers', canActivate: [authGuard] },
-            //     { path: 'shortlisted-candidates', component: ShortlistedCandidates, title: 'Shortlisted Candidates - ZAB Careers' },
             { path: 'update-job/:jobId', component: UpdateJob, title: 'Update Job - ZAB Careers', canActivate: [authGuard] },
             { path: 'users-messages', component: UsersMessages, title: 'Users Message - ZAB Careers', canActivate: [authGuard] },
             { path: 'email-accounts', component: EmailAccounts, title: 'Email Accounts - ZAB Careers', canActivate: [authGuard] }
         ]
     },
 
-    // { path: '**', component: Error404, title: 'Page Not Found - ZAB Careers' }
+    // Wild Card Route
+    { path: '**', component: Error404, title: 'Page Not Found - ZAB Careers' }
 
 ];
