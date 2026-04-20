@@ -25,7 +25,13 @@ export class AuthService {
 
   // Check If User Is Authenticated.
   isLoggedIn(): boolean {
-    return !!this.getToken();
+    const token = this.getToken();
+    if (!token) return false;
+
+    const decoded: any = jwtDecode(token);
+    const expiry = decoded.exp * 1000;
+
+    return Date.now() < expiry;
   }
 
   // Getting User Id

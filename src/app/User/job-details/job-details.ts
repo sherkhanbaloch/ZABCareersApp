@@ -23,7 +23,11 @@ export class JobDetails implements OnInit {
     this.UserId = Number(this.auth.getUserId());
 
     this.GetJobById(this.JobId);
-    this.CheckIsApplied();
+
+    if (this.auth.isLoggedIn()) {
+      this.CheckIsApplied();
+    }
+
   }
 
   // Variables
@@ -61,22 +65,28 @@ export class JobDetails implements OnInit {
 
   AddApplication(): void {
 
-    const model = {
-      jobId: this.JobId,
-      candidateId: Number(localStorage.getItem('UserId'))
-    };
+    if (this.auth.isLoggedIn()) {
+      
+      const model = {
+        jobId: this.JobId,
+        candidateId: this.UserId
+      };
 
-    this.http.post('https://localhost:7147/api/AppliedJob/AddApplication', model).subscribe(
-      {
-        next: (res) => {
-          this.toastr.success("Job Applied", 'Success', { closeButton: true });
-          this.router.navigate([`user/job-details/${this.JobId}`]);
-          this.CheckIsApplied();
-        },
-        error: (err) => {
-          this.toastr.error("Error - " + err.error, 'Error', { closeButton: true });
-        }
-      });
+      this.http.post('https://localhost:7147/api/AppliedJob/AddApplication', model).subscribe(
+        {
+          next: (res) => {
+            this.toastr.success("Job Applied", 'Success', { closeButton: true });
+            this.router.navigate([`/user/job-details/${this.JobId}`]);
+            this.CheckIsApplied();
+          },
+          error: (err) => {
+            this.toastr.error("Error - " + err.error, 'Error', { closeButton: true });
+          }
+        });
+    }
+    else {
+      this.router.navigate(["/user/user-login/"]);
+    }
   }
 
 }

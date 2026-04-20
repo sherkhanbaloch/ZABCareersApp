@@ -70,24 +70,32 @@
                     <div class="row">
                         <div class="col mb-3">
                             <label class="form-label">User Name</label>
+                            <span *ngIf="AddForm.userName.invalid && AddForm.userName.touched"
+                                class="text-danger fw-bold"> *</span>
                             <input type="text" class="form-control" formControlName="userName">
                         </div>
                     </div>
                     <div class="row">
                         <div class="col mb-3">
                             <label class="form-label">Email</label>
+                            <span *ngIf="AddForm.userEmail.invalid && AddForm.userEmail.touched"
+                                class="text-danger fw-bold"> *</span>
                             <input type="email" class="form-control" formControlName="userEmail">
                         </div>
                     </div>
                     <div class="row">
                         <div class="col mb-3">
                             <label class="form-label">Password</label>
+                            <span *ngIf="AddForm.userPassword.invalid && AddForm.userPassword.touched"
+                                class="text-danger fw-bold"> *</span>
                             <input type="password" class="form-control" formControlName="userPassword">
                         </div>
                     </div>
                     <div class="row g-2">
                         <div class="col mb-0">
                             <label class="form-label">Role</label>
+                            <span *ngIf="AddForm.roleId.invalid && AddForm.roleId.touched" class="text-danger fw-bold">
+                                *</span>
                             <select class="form-control" formControlName="roleId">
                                 <option value="">Select Role</option>
                                 @for (r of ListofRoles(); track r.roleId) {
@@ -99,6 +107,8 @@
                         </div>
                         <div class="col mb-0">
                             <label class="form-label">Campus</label>
+                            <span *ngIf="AddForm.campusId.invalid && AddForm.campusId.touched"
+                                class="text-danger fw-bold"> *</span>
                             <select class="form-control" formControlName="campusId">
                                 <option value="">Select Campus</option>
                                 @for (c of ListofCampuses(); track c.campusId) {
@@ -114,7 +124,7 @@
                     <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">
                         Close
                     </button>
-                    <button type="submit" class="btn btn-primary">Save User</button>
+                    <button type="submit" [disabled]="AddUserForm.invalid" class="btn btn-primary">Save User</button>
                 </div>
             </div>
         </div>
@@ -134,12 +144,16 @@
                     <div class="row">
                         <div class="col mb-3">
                             <label class="form-label">User Name</label>
+                            <span *ngIf="EditForm.userName.invalid && EditForm.userName.touched"
+                                class="text-danger fw-bold"> *</span>
                             <input type="text" class="form-control" formControlName="userName">
                         </div>
                     </div>
                     <div class="row">
                         <div class="col mb-3">
                             <label class="form-label">Email</label>
+                            <span *ngIf="EditForm.userEmail.invalid && EditForm.userEmail.touched"
+                                class="text-danger fw-bold"> *</span>
                             <input type="email" class="form-control" formControlName="userEmail">
                         </div>
                     </div>
@@ -152,6 +166,8 @@
                     <div class="row g-2">
                         <div class="col mb-0">
                             <label class="form-label">Role</label>
+                            <span *ngIf="EditForm.roleId.invalid && EditForm.roleId.touched"
+                                class="text-danger fw-bold"> *</span>
                             <select class="form-control" formControlName="roleId">
                                 <option value="">Select Role</option>
                                 @for (r of ListofRoles(); track r.roleId) {
@@ -163,6 +179,8 @@
                         </div>
                         <div class="col mb-0">
                             <label class="form-label">Campus</label>
+                            <span *ngIf="EditForm.campusId.invalid && EditForm.campusId.touched"
+                                class="text-danger fw-bold"> *</span>
                             <select class="form-control" formControlName="campusId">
                                 <option value="">Select Campus</option>
                                 @for (c of ListofCampuses(); track c.campusId) {
@@ -178,7 +196,7 @@
                     <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">
                         Close
                     </button>
-                    <button type="submit" class="btn btn-warning">Update User</button>
+                    <button type="submit" [disabled]="EditUserForm.invalid" class="btn btn-warning">Update User</button>
                 </div>
             </div>
         </div>

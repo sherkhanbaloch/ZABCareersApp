@@ -1,12 +1,13 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
+import { NgIf } from '@angular/common';
 
 @Component({
   selector: 'app-user-email-verify',
-  imports: [ReactiveFormsModule],
+  imports: [ReactiveFormsModule, NgIf],
   templateUrl: './user-email-verify.html',
   styleUrl: './user-email-verify.css',
 })
@@ -25,7 +26,7 @@ export class UserEmailVerify implements OnInit {
 
   VerifyForm = new FormGroup(
     {
-      OTPNumber: new FormControl(),
+      OTPNumber: new FormControl('', Validators.required),
     }
   );
 
@@ -48,6 +49,11 @@ export class UserEmailVerify implements OnInit {
         }
       }
     );
+  }
+
+  // For Validation
+  get OTPForm() {
+    return this.VerifyForm.controls;
   }
 
 

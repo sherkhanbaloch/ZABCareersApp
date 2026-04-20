@@ -1,11 +1,12 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit, signal } from '@angular/core';
-import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
+import { NgIf } from '@angular/common';
 
 @Component({
   selector: 'app-email-accounts',
-  imports: [ReactiveFormsModule],
+  imports: [ReactiveFormsModule, NgIf],
   templateUrl: './email-accounts.html',
   styleUrl: './email-accounts.css',
 })
@@ -24,22 +25,21 @@ export class EmailAccounts implements OnInit {
 
   AddEmailForm = new FormGroup(
     {
-      emailHost: new FormControl(''),
-      emailPort: new FormControl(),
-      emailUsername: new FormControl(''),
-      emailPassword: new FormControl(''),
-      isDefault: new FormControl(),
-      emailAccountStatus: new FormControl(1)
+      emailHost: new FormControl('', Validators.required),
+      emailPort: new FormControl('', Validators.required),
+      emailUsername: new FormControl('', Validators.required),
+      emailPassword: new FormControl('', Validators.required),
+      isDefault: new FormControl(false),
     }
   );
 
   EditEmailForm = new FormGroup(
     {
-      emailHost: new FormControl(''),
-      emailPort: new FormControl(),
-      emailUsername: new FormControl(''),
-      emailPassword: new FormControl(''),
-      isDefault: new FormControl(),
+      emailHost: new FormControl('', Validators.required),
+      emailPort: new FormControl('', Validators.required),
+      emailUsername: new FormControl('', Validators.required),
+      emailPassword: new FormControl('', Validators.required),
+      isDefault: new FormControl(false),
     }
   );
 
@@ -121,7 +121,18 @@ export class EmailAccounts implements OnInit {
   }
 
   ResetData(): void {
+    this.EmailId = 0;
+    this.AddEmailForm.reset();
+    this.EditEmailForm.reset();
+  }
 
+  // For Validation
+  get AddForm() {
+    return this.AddEmailForm.controls;
+  }
+
+  get EditForm() {
+    return this.EditEmailForm.controls;
   }
 
 }

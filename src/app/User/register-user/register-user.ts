@@ -1,12 +1,13 @@
 import { HttpClient } from '@angular/common/http';
 import { Component } from '@angular/core';
-import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
+import { NgIf } from '@angular/common';
 
 @Component({
   selector: 'app-register-user',
-  imports: [ReactiveFormsModule],
+  imports: [ReactiveFormsModule, NgIf],
   templateUrl: './register-user.html',
   styleUrl: './register-user.css',
 })
@@ -17,14 +18,13 @@ export class RegisterUser {
 
   AddUserForm = new FormGroup(
     {
-      candidateName: new FormControl(''),
-      candidateEmail: new FormControl(),
-      candidatePassword: new FormControl(''),
-      candidateMobile: new FormControl(''),
-      candidateResume: new FormControl(),
-      candidateResumeUrl: new FormControl(''),
-      resumeLastUpdated: new FormControl(''),
-      candidateStatus: new FormControl('1')
+      candidateName: new FormControl('', Validators.required),
+      candidateEmail: new FormControl('', Validators.required),
+      candidatePassword: new FormControl('', Validators.required),
+      candidateMobile: new FormControl('', Validators.required),
+      candidateResume: new FormControl(null, Validators.required),
+      candidateResumeUrl: new FormControl('', Validators.required),
+      resumeLastUpdated: new FormControl('', Validators.required),
     }
   );
 
@@ -46,7 +46,6 @@ export class RegisterUser {
     formData.append('CandidateMobile', this.AddUserForm.value.candidateMobile!);
     formData.append('CandidateResume', this.selectedFile);
     formData.append('ResumeLastUpdated', date.toDateString());
-    formData.append('CandidateStatus', '1');
 
     this.http.post('https://localhost:7147/api/Candidates/AddCandidate/', formData)
       .subscribe({
@@ -59,5 +58,11 @@ export class RegisterUser {
         }
       });
   }
+
+  // For Validation
+  get AddForm() {
+    return this.AddUserForm.controls;
+  }
+
 
 }

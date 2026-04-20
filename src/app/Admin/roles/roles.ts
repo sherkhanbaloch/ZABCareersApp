@@ -1,11 +1,13 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit, signal } from '@angular/core';
-import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
+import { NgIf } from '@angular/common';
+
 
 @Component({
   selector: 'app-roles',
-  imports: [ReactiveFormsModule],
+  imports: [ReactiveFormsModule, NgIf],
   templateUrl: './roles.html',
   styleUrl: './roles.css',
 })
@@ -24,14 +26,13 @@ export class Roles implements OnInit {
 
   AddRoleForm = new FormGroup(
     {
-      roleName: new FormControl(''),
-      roleStatus: new FormControl('1')
+      roleName: new FormControl('', Validators.required),
     }
   );
 
   EditRoleForm = new FormGroup(
     {
-      roleName: new FormControl(''),
+      roleName: new FormControl('', Validators.required),
     }
   );
 
@@ -113,8 +114,21 @@ export class Roles implements OnInit {
   }
 
   ResetData(): void {
-
+    this.RoleId = 0;
+    this.AddRoleForm.reset();
+    this.EditRoleForm.reset();
   }
+
+  // For Validation
+  get AddForm() {
+    return this.AddRoleForm.controls;
+  }
+
+  get EditForm() {
+    return this.EditRoleForm.controls;
+  }
+
+
 
 }
 

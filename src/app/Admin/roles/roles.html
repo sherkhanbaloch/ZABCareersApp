@@ -64,6 +64,7 @@
                     <div class="row">
                         <div class="col mb-3">
                             <label class="form-label">Role Name</label>
+                            <span *ngIf="AddForm.roleName.invalid && AddForm.roleName.touched" class="text-danger fw-bold"> *</span>
                             <input type="text" class="form-control" formControlName="roleName">
                         </div>
                     </div>
@@ -72,7 +73,7 @@
                     <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">
                         Close
                     </button>
-                    <button type="submit" class="btn btn-primary">Save Role</button>
+                    <button type="submit" [disabled]="AddRoleForm.invalid" class="btn btn-primary">Save Role</button>
                 </div>
             </div>
         </div>
@@ -92,6 +93,7 @@
                     <div class="row">
                         <div class="col mb-3">
                             <label class="form-label">Role Name</label>
+                            <span *ngIf="EditForm.roleName.invalid && EditForm.roleName.touched" class="text-danger fw-bold"> *</span>
                             <input type="text" class="form-control" formControlName="roleName">
                         </div>
                     </div>
@@ -101,7 +103,7 @@
                     <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">
                         Close
                     </button>
-                    <button type="submit" class="btn btn-warning">Update Role</button>
+                    <button type="submit" [disabled]="EditRoleForm.invalid" class="btn btn-warning">Update Role</button>
                 </div>
             </div>
         </div>

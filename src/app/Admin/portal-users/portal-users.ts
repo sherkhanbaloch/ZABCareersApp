@@ -1,11 +1,12 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit, signal } from '@angular/core';
-import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
+import { NgIf } from '@angular/common';
 
 @Component({
   selector: 'app-portal-users',
-  imports: [ReactiveFormsModule],
+  imports: [ReactiveFormsModule, NgIf],
   templateUrl: './portal-users.html',
   styleUrl: './portal-users.css',
 })
@@ -29,23 +30,21 @@ export class PortalUsers implements OnInit {
 
   AddUserForm = new FormGroup(
     {
-      userName: new FormControl(''),
-      userEmail: new FormControl(''),
-      userPassword: new FormControl(''),
-      roleId: new FormControl(''),
-      campusId: new FormControl(''),
-      userStatus: new FormControl('1')
+      userName: new FormControl('', Validators.required),
+      userEmail: new FormControl('', Validators.required),
+      userPassword: new FormControl('', Validators.required),
+      roleId: new FormControl('', Validators.required),
+      campusId: new FormControl('', Validators.required),
     }
   );
 
   EditUserForm = new FormGroup(
     {
-      userName: new FormControl(''),
-      userEmail: new FormControl(''),
+      userName: new FormControl('', Validators.required),
+      userEmail: new FormControl('', Validators.required),
       userPassword: new FormControl(''),
-      roleId: new FormControl(''),
-      campusId: new FormControl(''),
-      userStatus: new FormControl('1')
+      roleId: new FormControl('', Validators.required),
+      campusId: new FormControl('', Validators.required),
     }
   );
 
@@ -117,7 +116,7 @@ export class PortalUsers implements OnInit {
           this.EditUserForm.patchValue(ResData);
         },
         error: (err) => {
-           this.toastr.error("Error - " + err.error, 'Error', { closeButton: true });
+          this.toastr.error("Error - " + err.error, 'Error', { closeButton: true });
         }
       }
     );
@@ -132,7 +131,7 @@ export class PortalUsers implements OnInit {
           this.ResetData();
         },
         error: (err) => {
-           this.toastr.error("Error - " + err.error, 'Error', { closeButton: true });
+          this.toastr.error("Error - " + err.error, 'Error', { closeButton: true });
         }
       }
     );
@@ -142,18 +141,30 @@ export class PortalUsers implements OnInit {
     this.http.delete(`https://localhost:7147/api/Users/DeleteUser/${this.UserId}`).subscribe(
       {
         next: (res) => {
-           this.toastr.success("User Deleted.", 'Success', { closeButton: true });
+          this.toastr.success("User Deleted.", 'Success', { closeButton: true });
           this.ShowAllUsers();
         },
         error: (err) => {
-           this.toastr.error("Error - " + err.error, 'Error', { closeButton: true });
+          this.toastr.error("Error - " + err.error, 'Error', { closeButton: true });
         }
       }
     );
   }
 
   ResetData(): void {
+    this.UserId = 0;
+    this.AddUserForm.reset();
+    this.EditUserForm.reset();
+  }
 
+
+  // For Validation
+  get AddForm() {
+    return this.AddUserForm.controls;
+  }
+
+  get EditForm() {
+    return this.EditUserForm.controls;
   }
 
 }

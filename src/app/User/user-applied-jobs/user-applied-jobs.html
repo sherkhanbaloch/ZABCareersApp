@@ -1,0 +1,71 @@
+<section class="contact-section">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-3">
+                <div class="card">
+                    <img src="https://cdn-icons-png.flaticon.com/512/3135/3135715.png" class="card-img-top w-50 mx-auto"
+                        alt="...">
+                    <div class="card-body">
+                        <h5 class="card-title">{{UserName}}</h5>
+                    </div>
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item border"><a href="/user/profile" class="text-dark">Profile</a></li>
+                        <li class="list-group-item border"><a href="/user/applied-jobs"
+                                class="text-primary fw-bold">Applied
+                                Jobs</a></li>
+                        <li class="list-group-item border"><a href="/user/delete-account" class="text-dark">Delete
+                                Account</a></li>
+                    </ul>
+                    <div class="card-body text-center border border-danger">
+                        <a href="#" class="card-link text-danger">Log Out</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-9">
+                <!-- Basic Bootstrap Table -->
+                <div class="card">
+                    <h5 class="card-header">Applied Jobs</h5>
+                    <div class="table-responsive text-nowrap">
+                        <table class="table table-hover">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Job Title</th>
+                                    <th>Location</th>
+                                    <th>Deadline</th>
+                                    <th>Applied On</th>
+                                    <th>Status</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody class="table-border-bottom-0">
+                                @if (ListOfJobs().length > 0) {
+                                @for (item of ListOfJobs(); track item.appliedJobId) {
+                                <tr>
+                                    <td>{{item.appliedJobId}}</td>
+                                    <td>{{item.jobTitle}}</td>
+                                    <td>{{item.jobLocation}}</td>
+                                    <td>{{item.applicationDeadline | date}}</td>
+                                    <td>{{item.appliedOn | date}}</td>
+                                    <td>{{item.applicationStatus}}</td>
+                                    <td>
+                                        <button class="btn btn-sm btn-outline-primary">Withdraw</button>
+                                    </td>
+                                </tr>
+                                }
+                                }
+                                @else
+                                {
+                                <tr>
+                                    <td colspan="7" class="text-center text-danger">No Data Found.</td>
+                                </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <!--/ Basic Bootstrap Table -->
+            </div>
+        </div>
+    </div>
+</section>

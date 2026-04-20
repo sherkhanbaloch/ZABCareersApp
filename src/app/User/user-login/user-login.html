@@ -6,11 +6,14 @@
                 <hr>
             </div>
             <div class="col-lg-6 mx-auto">
-                <form [formGroup]="LoginForm" (ngSubmit)="UserLogin()" class="form-contact contact_form" id="contactForm" novalidate="novalidate">
+                <form [formGroup]="LoginForm" (ngSubmit)="UserLogin()" class="form-contact contact_form"
+                    id="contactForm" novalidate="novalidate">
                     <div class="row">
                         <div class="col-sm-12">
                             <div class="form-group">
                                 <label class="form-label">Email</label>
+                                <span *ngIf="loginForm.userName.invalid && loginForm.userName.touched"
+                                    class="text-danger fw-bold"> *</span>
                                 <input class="form-control valid" id="email" type="email"
                                     onfocus="this.placeholder = ''" onblur="this.placeholder = 'Enter email address'"
                                     placeholder="Email" formControlName="userName">
@@ -19,6 +22,8 @@
                         <div class="col-sm-12">
                             <div class="form-group">
                                 <label class="form-label">Password</label>
+                                <span *ngIf="loginForm.password.invalid && loginForm.password.touched"
+                                    class="text-danger fw-bold"> *</span>
                                 <input class="form-control" formControlName="password" id="password" type="password"
                                     onfocus="this.placeholder = ''" onblur="this.placeholder = 'Enter Password'"
                                     placeholder="Enter Password">
@@ -26,7 +31,8 @@
                         </div>
                     </div>
                     <div class="form-group mt-3 text-center">
-                        <button type="submit" class="button button-contactForm boxed-btn">Login</button>
+                        <button type="submit" [disabled]="LoginForm.invalid"
+                            class="button button-contactForm boxed-btn">Login</button>
                     </div>
                 </form>
             </div>

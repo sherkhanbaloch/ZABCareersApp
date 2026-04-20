@@ -1,12 +1,13 @@
+import { NgIf } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { publishFacade } from '@angular/compiler';
 import { Component, OnInit, signal } from '@angular/core';
-import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-add-new-job',
-  imports: [ReactiveFormsModule],
+  imports: [ReactiveFormsModule, NgIf],
   templateUrl: './add-new-job.html',
   styleUrl: './add-new-job.css',
 })
@@ -26,24 +27,22 @@ export class AddNewJob {
 
   AddJobForm = new FormGroup(
     {
-      jobTitle: new FormControl(''),
-      featuredImage: new FormControl(),
-      featuredImageUrl: new FormControl(''),
-      vacancy: new FormControl(''),
-      employmentStatus: new FormControl(''),
-      experience: new FormControl(''),
-      jobLocation: new FormControl(''),
-      salary: new FormControl(''),
-      gender: new FormControl(''),
-      publishedOn: new FormControl(''),
-      applicationDeadline: new FormControl(''),
-      jobDescription: new FormControl(''),
-      responsibilities: new FormControl(''),
-      educationAndExperience: new FormControl(''),
-      otherBenifits: new FormControl(''),
-      jobStatus: new FormControl(''),
-      campusId: new FormControl(''),
-      departmentId: new FormControl('')
+      jobTitle: new FormControl('', Validators.required),
+      featuredImage: new FormControl(null),
+      vacancy: new FormControl('', Validators.required),
+      employmentStatus: new FormControl('', Validators.required),
+      experience: new FormControl('', Validators.required),
+      jobLocation: new FormControl('', Validators.required),
+      salary: new FormControl('', Validators.required),
+      gender: new FormControl('', Validators.required),
+      publishedOn: new FormControl('', Validators.required),
+      applicationDeadline: new FormControl('', Validators.required),
+      jobDescription: new FormControl('', Validators.required),
+      responsibilities: new FormControl('', Validators.required),
+      educationAndExperience: new FormControl('', Validators.required),
+      otherBenefits: new FormControl('', Validators.required),
+      campusId: new FormControl('', Validators.required),
+      departmentId: new FormControl('', Validators.required)
     }
   );
 
@@ -96,8 +95,7 @@ export class AddNewJob {
     formData.append('JobDescription', this.AddJobForm.value.jobDescription!);
     formData.append('Responsibilities', this.AddJobForm.value.responsibilities!);
     formData.append('EducationAndExperience', this.AddJobForm.value.educationAndExperience!);
-    formData.append('OtherBenifits', this.AddJobForm.value.otherBenifits!);
-    formData.append('JobStatus', '1');
+    formData.append('OtherBenefits', this.AddJobForm.value.otherBenefits!);
     formData.append('CampusId', this.AddJobForm.value.campusId!);
     formData.append('DepartmentId', this.AddJobForm.value.departmentId!);
 
@@ -114,7 +112,12 @@ export class AddNewJob {
   }
 
   ResetData(): void {
+    this.AddJobForm.reset();
+  }
 
+  // For Validation
+  get AddForm() {
+    return this.AddJobForm.controls;
   }
 
 }

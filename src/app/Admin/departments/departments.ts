@@ -1,11 +1,12 @@
+import { NgIf } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit, signal } from '@angular/core';
-import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-departments',
-  imports: [ReactiveFormsModule],
+  imports: [ReactiveFormsModule, NgIf],
   templateUrl: './departments.html',
   styleUrl: './departments.css',
 })
@@ -24,14 +25,13 @@ export class Departments implements OnInit {
 
   AddDepartmentForm = new FormGroup(
     {
-      departmentName: new FormControl(''),
-      departmentStatus: new FormControl('1')
+      departmentName: new FormControl('', Validators.required),
     }
   );
 
   EditDepartmentForm = new FormGroup(
     {
-      departmentName: new FormControl(''),
+      departmentName: new FormControl('', Validators.required),
     }
   );
 
@@ -106,14 +106,25 @@ export class Departments implements OnInit {
           this.ShowAllDepartments();
         },
         error: (err) => {
-           this.toastr.error("Error - " + err.error, 'Error', { closeButton: true });
+          this.toastr.error("Error - " + err.error, 'Error', { closeButton: true });
         }
       }
     );
   }
 
   ResetData(): void {
+    this.DepartmentId = 0;
+    this.AddDepartmentForm.reset();
+    this.EditDepartmentForm.reset();
+  }
 
+  // For Validation
+  get AddForm() {
+    return this.AddDepartmentForm.controls;
+  }
+
+  get EditForm() {
+    return this.EditDepartmentForm.controls;
   }
 
 }

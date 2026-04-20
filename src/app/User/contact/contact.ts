@@ -1,14 +1,17 @@
 import { HttpClient } from '@angular/common/http';
 import { Component } from '@angular/core';
-import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
+import { NgIf } from '@angular/common';
+
 
 @Component({
   selector: 'app-contact',
-  imports: [ReactiveFormsModule],
+  imports: [ReactiveFormsModule, NgIf],
   templateUrl: './contact.html',
   styleUrl: './contact.css',
 })
+
 export class Contact {
 
   constructor(private http: HttpClient, private toastr: ToastrService) {
@@ -16,11 +19,10 @@ export class Contact {
 
   AddMessageForm = new FormGroup(
     {
-      name: new FormControl(''),
-      email: new FormControl(''),
-      subject: new FormControl(''),
-      messageText: new FormControl(''),
-      checkStatus: new FormControl('Pending')
+      name: new FormControl('', Validators.required),
+      email: new FormControl('', Validators.required),
+      subject: new FormControl('', Validators.required),
+      messageText: new FormControl('', Validators.required),
     }
   );
 
@@ -38,8 +40,15 @@ export class Contact {
     );
   }
 
-  ResetData(): void {
-
+  ResetData(): void { 
+    this.AddMessageForm.reset();
   }
+
+  // For Validation
+  get AddForm() {
+    return this.AddMessageForm.controls;
+  }
+
+
 
 }

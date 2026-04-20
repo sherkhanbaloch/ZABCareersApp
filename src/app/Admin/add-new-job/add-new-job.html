@@ -7,104 +7,142 @@
             </div>
             <div class="card-body">
                 <form class="form" [formGroup]="AddJobForm" (ngSubmit)="SaveJob()">
-                    <div class="mb-3">
-                        <label class="form-label">Job Title</label>
-                        <input type="text" class="form-control" formControlName="jobTitle">
+                    <div class="row">
+                        <div class="mb-3 col-md-6">
+                            <label class="form-label">Job Title</label>
+                            <span *ngIf="AddForm.jobTitle.invalid && AddForm.jobTitle.touched"
+                                class="text-danger fw-bold">
+                                *</span>
+                            <input type="text" class="form-control" formControlName="jobTitle">
+                        </div>
+                        <div class="mb-3 col-md-6">
+                            <label class="form-label">Featured Image</label>
+                            <span *ngIf="AddForm.featuredImage.invalid && AddForm.featuredImage.touched"
+                                class="text-danger fw-bold"> *</span>
+                            <input type="file" class="form-control" (change)="onFileChange($event)">
+                        </div>
+                        <div class="mb-3 col-md-6">
+                            <label class="form-label">Vacancy</label>
+                            <span *ngIf="AddForm.vacancy.invalid && AddForm.vacancy.touched"
+                                class="text-danger fw-bold">
+                                *</span>
+                            <input type="number" class="form-control" formControlName="vacancy">
+                        </div>
+                        <div class="mb-3 col-md-6">
+                            <label class="form-label">Employment Status</label>
+                            <span *ngIf="AddForm.employmentStatus.invalid && AddForm.employmentStatus.touched"
+                                class="text-danger fw-bold"> *</span>
+                            <select class="form-control" formControlName="employmentStatus">
+                                <option ngValue="">Select Employment Status</option>
+                                <option ngValue="Part Time">Part Time</option>
+                                <option ngValue="Full Time">Full Time</option>
+                                <option ngValue="Contract">Contract</option>
+                            </select>
+                        </div>
+                        <div class="mb-3 col-md-6">
+                            <label class="form-label">Experience</label>
+                            <span *ngIf="AddForm.experience.invalid && AddForm.experience.touched"
+                                class="text-danger fw-bold"> *</span>
+                            <input type="text" class="form-control" formControlName="experience">
+                        </div>
+                        <div class="mb-3 col-md-6">
+                            <label class="form-label">Job Location</label>
+                            <span *ngIf="AddForm.jobLocation.invalid && AddForm.jobLocation.touched"
+                                class="text-danger fw-bold"> *</span>
+                            <select class="form-control" formControlName="jobLocation">
+                                <option value="">Select Location</option>
+                                @for (c of ListofCampuses(); track c.campusId) {
+                                <option [value]="c.campusName">
+                                    {{ c.campusName }}
+                                </option>
+                                }
+                            </select>
+                        </div>
+                        <div class="mb-3 col-md-6">
+                            <label class="form-label">Salary</label>
+                            <span *ngIf="AddForm.salary.invalid && AddForm.salary.touched" class="text-danger fw-bold">
+                                *</span>
+                            <input type="text" class="form-control" formControlName="salary">
+                        </div>
+                        <div class="mb-3 col-md-6">
+                            <label class="form-label">Gender</label>
+                            <span *ngIf="AddForm.gender.invalid && AddForm.gender.touched" class="text-danger fw-bold">
+                                *</span>
+                            <select class="form-control" formControlName="gender">
+                                <option ngValue="">Select Gender</option>
+                                <option ngValue="Any">Any</option>
+                                <option ngValue="Male">Male</option>
+                                <option ngValue="Female">Female</option>
+                                <option ngValue="Others">Others</option>
+                            </select>
+                        </div>
+                        <div class="mb-3 col-md-6">
+                            <label class="form-label">Published on</label>
+                            <span *ngIf="AddForm.publishedOn.invalid && AddForm.publishedOn.touched"
+                                class="text-danger fw-bold"> *</span>
+                            <input type="date" class="form-control" formControlName="publishedOn">
+                        </div>
+                        <div class="mb-3 col-md-6">
+                            <label class="form-label">Application Deadline</label>
+                            <span *ngIf="AddForm.applicationDeadline.invalid && AddForm.applicationDeadline.touched"
+                                class="text-danger fw-bold"> *</span>
+                            <input type="date" class="form-control" formControlName="applicationDeadline">
+                        </div>
+                        <div class="mb-3 col-md-6">
+                            <label class="form-label">Campus</label>
+                            <span *ngIf="AddForm.campusId.invalid && AddForm.campusId.touched"
+                                class="text-danger fw-bold">
+                                *</span>
+                            <select class="form-control" formControlName="campusId">
+                                <option value="">Select Campus</option>
+                                @for (c of ListofCampuses(); track c.campusId) {
+                                <option [value]="c.campusId">
+                                    {{ c.campusName }}
+                                </option>
+                                }
+                            </select>
+                        </div>
+                        <div class="mb-3 col-md-6">
+                            <label class="form-label">Department</label>
+                            <span *ngIf="AddForm.departmentId.invalid && AddForm.departmentId.touched"
+                                class="text-danger fw-bold"> *</span>
+                            <select class="form-control" formControlName="departmentId">
+                                <option value="">Select Department</option>
+                                @for (d of ListofDepartments(); track d.departmentId) {
+                                <option [value]="d.departmentId">
+                                    {{ d.departmentName }}
+                                </option>
+                                }
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Job Description</label>
+                            <span *ngIf="AddForm.jobDescription.invalid && AddForm.jobDescription.touched"
+                                class="text-danger fw-bold"> *</span>
+                            <textarea class="form-control" id="editor-jd" formControlName="jobDescription"></textarea>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Responsibilities</label>
+                            <span *ngIf="AddForm.responsibilities.invalid && AddForm.responsibilities.touched"
+                                class="text-danger fw-bold"> *</span>
+                            <textarea class="form-control" id="editor-r" formControlName="responsibilities"></textarea>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Education + Experience</label>
+                            <span
+                                *ngIf="AddForm.educationAndExperience.invalid && AddForm.educationAndExperience.touched"
+                                class="text-danger fw-bold"> *</span>
+                            <textarea class="form-control" id="editor-ee"
+                                formControlName="educationAndExperience"></textarea>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Other Benifits</label>
+                            <span *ngIf="AddForm.otherBenefits.invalid && AddForm.otherBenefits.touched"
+                                class="text-danger fw-bold"> *</span>
+                            <textarea class="form-control" id="editor-ob" formControlName="otherBenefits"></textarea>
+                        </div>
+                        <button type="submit" [disabled]="AddJobForm.invalid" class="btn btn-primary">Post Job</button>
                     </div>
-                    <div class="mb-3">
-                        <label class="form-label">Featured Image</label>
-                        <input type="file" class="form-control" (change)="onFileChange($event)">
-                    </div>
-                    <div class="mb-3">
-                        <label class="form-label">Vacancy</label>
-                        <input type="number" class="form-control" formControlName="vacancy">
-                    </div>
-                    <div class="mb-3">
-                        <label class="form-label">Employment Status</label>
-                        <select class="form-control" formControlName="employmentStatus">
-                            <option ngValue="">-- Select --</option>
-                            <option ngValue="Part Time">Part Time</option>
-                            <option ngValue="Full Time">Full Time</option>
-                            <option ngValue="Contract">Contract</option>
-                        </select>
-                    </div>
-                    <div class="mb-3">
-                        <label class="form-label">Experience</label>
-                        <input type="text" class="form-control" formControlName="experience">
-                    </div>
-                    <div class="mb-3">
-                        <label class="form-label">Job Location</label>
-                        <select class="form-control" formControlName="jobLocation">
-                            <option value="">Select Location</option>
-                            @for (c of ListofCampuses(); track c.campusId) {
-                            <option [value]="c.campusName">
-                                {{ c.campusName }}
-                            </option>
-                            }
-                        </select>
-                    </div>
-                    <div class="mb-3">
-                        <label class="form-label">Salary</label>
-                        <input type="text" class="form-control" formControlName="salary">
-                    </div>
-                    <div class="mb-3">
-                        <label class="form-label">Gender</label>
-                        <select class="form-control" formControlName="gender">
-                            <option>-- Select --</option>
-                            <option>Any</option>
-                            <option>Male</option>
-                            <option>Female</option>
-                            <option>Others</option>
-                        </select>
-                    </div>
-                    <div class="mb-3">
-                        <label class="form-label">Published on</label>
-                        <input type="date" class="form-control" formControlName="publishedOn">
-                    </div>
-                    <div class="mb-3">
-                        <label class="form-label">Application Deadline</label>
-                        <input type="date" class="form-control" formControlName="applicationDeadline">
-                    </div>
-                    <div class="mb-3">
-                        <label class="form-label">Campus</label>
-                        <select class="form-control" formControlName="campusId">
-                            <option value="">Select Campus</option>
-                            @for (c of ListofCampuses(); track c.campusId) {
-                            <option [value]="c.campusId">
-                                {{ c.campusName }}
-                            </option>
-                            }
-                        </select>
-                    </div>
-                    <div class="mb-3">
-                        <label class="form-label">Department</label>
-                        <select class="form-control" formControlName="departmentId">
-                            <option value="">Select Department</option>
-                            @for (d of ListofDepartments(); track d.departmentId) {
-                            <option [value]="d.departmentId">
-                                {{ d.departmentName }}
-                            </option>
-                            }
-                        </select>
-                    </div>
-                    <div class="mb-3">
-                        <label class="form-label">Job Description</label>
-                        <textarea class="form-control" id="editor-jd" formControlName="jobDescription"></textarea>
-                    </div>
-                    <div class="mb-3">
-                        <label class="form-label">Responsibilities</label>
-                        <textarea class="form-control" id="editor-r" formControlName="responsibilities"></textarea>
-                    </div>
-                    <div class="mb-3">
-                        <label class="form-label">Education + Experience</label>
-                        <textarea class="form-control" id="editor-ee"
-                            formControlName="educationAndExperience"></textarea>
-                    </div>
-                    <div class="mb-3">
-                        <label class="form-label">Other Benifits</label>
-                        <textarea class="form-control" id="editor-ob" formControlName="otherBenifits"></textarea>
-                    </div>
-                    <button type="submit" class="btn btn-primary">Post Job</button>
                 </form>
             </div>
         </div>

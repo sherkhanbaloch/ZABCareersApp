@@ -1,13 +1,14 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, signal } from '@angular/core';
-import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthService } from '../../services/auth-service';
 import { ToastrService } from 'ngx-toastr';
+import { NgIf } from '@angular/common';
 
 @Component({
   selector: 'app-user-login',
-  imports: [ReactiveFormsModule],
+  imports: [ReactiveFormsModule, NgIf],
   templateUrl: './user-login.html',
   styleUrl: './user-login.css',
 })
@@ -18,8 +19,8 @@ export class UserLogin {
 
   LoginForm = new FormGroup(
     {
-      userName: new FormControl(''),
-      password: new FormControl(''),
+      userName: new FormControl('', Validators.required),
+      password: new FormControl('', Validators.required),
     }
   );
 
@@ -44,7 +45,12 @@ export class UserLogin {
   }
 
   ResetData(): void {
+    this.LoginForm.reset();
+  }
 
+  // For Validation
+  get loginForm() {
+    return this.LoginForm.controls;
   }
 
 }

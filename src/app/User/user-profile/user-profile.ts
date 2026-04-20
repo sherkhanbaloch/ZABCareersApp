@@ -1,7 +1,7 @@
 import { DatePipe } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { Component, signal } from '@angular/core';
-import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { AuthService } from '../../services/auth-service';
 import { ToastrService } from 'ngx-toastr';
 
@@ -21,6 +21,7 @@ export class UserProfile {
 
     this.UserId = Number(this.auth.getUserId());
     this.GetCandidateByID(this.UserId);
+
   }
 
   // Variables
@@ -28,13 +29,13 @@ export class UserProfile {
 
   UserProfileForm = new FormGroup(
     {
-      candidateId: new FormControl(),
-      candidateName: new FormControl(),
-      candidateEmail: new FormControl(),
-      candidatePassword: new FormControl(),
-      candidateMobile: new FormControl(),
-      candidateResumeUrl: new FormControl(),
-      resumeLastUpdated: new FormControl()
+      candidateId: new FormControl(''),
+      candidateName: new FormControl('', Validators.required),
+      candidateEmail: new FormControl('', [Validators.required, Validators.email]),
+      candidatePassword: new FormControl(''),
+      candidateMobile: new FormControl('', Validators.required),
+      candidateResumeUrl: new FormControl(''),
+      resumeLastUpdated: new FormControl('')
     }
   );
 

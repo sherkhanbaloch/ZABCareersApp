@@ -1,18 +1,20 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit, signal } from '@angular/core';
-import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
+import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
+import { NgIf } from '@angular/common';
+
 
 @Component({
   selector: 'app-update-job',
-  imports: [ReactiveFormsModule],
+  imports: [ReactiveFormsModule, NgIf],
   templateUrl: './update-job.html',
   styleUrl: './update-job.css',
 })
 export class UpdateJob implements OnInit {
 
-  constructor(private route: ActivatedRoute, private http: HttpClient, private toastr: ToastrService) {
+  constructor(private route: ActivatedRoute, private http: HttpClient, private toastr: ToastrService, private router: Router) {
   }
 
   ngOnInit(): void {
@@ -31,26 +33,25 @@ export class UpdateJob implements OnInit {
 
   EditJobForm = new FormGroup(
     {
-      jobId: new FormControl(),
-      jobTitle: new FormControl(''),
-      featuredImage: new FormControl(),
-      featuredImageUrl: new FormControl(''),
-      vacancy: new FormControl(''),
-      employmentStatus: new FormControl(''),
-      experience: new FormControl(''),
-      jobLocation: new FormControl(''),
-      salary: new FormControl(''),
-      gender: new FormControl(''),
-      publishedOn: new FormControl(''),
-      applicationDeadline: new FormControl(''),
-      jobDescription: new FormControl(''),
-      responsibilities: new FormControl(''),
-      educationAndExperience: new FormControl(''),
-      otherBenefits: new FormControl(''),
-      departmentId: new FormControl(''),
-      departmentName: new FormControl(''),
-      campusId: new FormControl(''),
-      campusName: new FormControl('')
+      jobId: new FormControl('', Validators.required),
+      jobTitle: new FormControl('', Validators.required),
+      featuredImage: new FormControl(null),
+      vacancy: new FormControl('', Validators.required),
+      employmentStatus: new FormControl('', Validators.required),
+      experience: new FormControl('', Validators.required),
+      jobLocation: new FormControl('', Validators.required),
+      salary: new FormControl('', Validators.required),
+      gender: new FormControl('', Validators.required),
+      publishedOn: new FormControl('', Validators.required),
+      applicationDeadline: new FormControl('', Validators.required),
+      jobDescription: new FormControl('', Validators.required),
+      responsibilities: new FormControl('', Validators.required),
+      educationAndExperience: new FormControl('', Validators.required),
+      otherBenefits: new FormControl('', Validators.required),
+      departmentId: new FormControl('', Validators.required),
+      departmentName: new FormControl('', Validators.required),
+      campusId: new FormControl('', Validators.required),
+      campusName: new FormControl('', Validators.required)
     }
   );
 
@@ -130,6 +131,7 @@ export class UpdateJob implements OnInit {
         next: (res) => {
           this.toastr.success("Job Updated.", 'Success', { closeButton: true });
           this.ResetData();
+          this.router.navigate(['/admin/all-jobs']);
         },
         error: (err) => {
           this.toastr.error("Error - " + err.error, 'Error', { closeButton: true });
@@ -138,7 +140,13 @@ export class UpdateJob implements OnInit {
   }
 
   ResetData(): void {
+    this.JobId = 0;
+    this.EditJobForm.reset();
+  }
 
+   // For Validation
+  get EditForm() {
+    return this.EditJobForm.controls;
   }
 
 }

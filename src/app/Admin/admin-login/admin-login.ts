@@ -1,13 +1,14 @@
+import { NgIf } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { Component, inject } from '@angular/core';
-import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthService } from '../../services/auth-service';
 import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-admin-login',
-  imports: [ReactiveFormsModule],
+  imports: [ReactiveFormsModule, NgIf],
   templateUrl: './admin-login.html',
   styleUrl: './admin-login.css',
 })
@@ -18,8 +19,8 @@ export class AdminLogin {
 
   LoginForm = new FormGroup(
     {
-      userName: new FormControl(''),
-      password: new FormControl(''),
+      userName: new FormControl('', Validators.required),
+      password: new FormControl('', Validators.required),
     }
   );
 
@@ -38,8 +39,14 @@ export class AdminLogin {
   }
 
   ResetData(): void {
-
+    this.LoginForm.reset();
   }
+
+  // For Validation
+  get loginForm() {
+    return this.LoginForm.controls;
+  }
+
 
 
 }
