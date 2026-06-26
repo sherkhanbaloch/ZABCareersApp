@@ -49,7 +49,7 @@
                                     <td>{{item.appliedOn | date}}</td>
                                     <td>{{item.applicationStatus}}</td>
                                     <td>
-                                        <button class="btn btn-sm btn-outline-primary">Withdraw</button>
+                                        <button class="btn btn-sm btn-outline-primary" (click)="WithdrawJob(item.appliedJobId)">Withdraw</button>
                                     </td>
                                 </tr>
                                 }
@@ -57,7 +57,7 @@
                                 @else
                                 {
                                 <tr>
-                                    <td colspan="7" class="text-center text-danger">No Data Found.</td>
+                                    <td colspan="7" class="text-center text-danger" >No Data Found.</td>
                                 </tr>
                                 }
                             </tbody>

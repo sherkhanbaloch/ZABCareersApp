@@ -39,7 +39,6 @@
                         <div class="col-sm-6">
                              <div class="form-group">
                                 <label class="form-label">Resume</label>
-                                <span *ngIf="AddForm.candidateResume.invalid && AddForm.candidateResume.touched" class="text-danger fw-bold"> *</span>
                                 <input class="form-control" type="file"
                                     onfocus="this.placeholder = ''" onblur="this.placeholder = 'Enter Resume'"
                                     placeholder="Enter Resume" (change)="onFileChange($event)">

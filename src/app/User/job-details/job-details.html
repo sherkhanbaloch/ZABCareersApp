@@ -1,36 +1,20 @@
 @if (job() != null) {
-<!-- Hero Area Start-->
-<div class="slider-area ">
-    <div class="single-slider section-overly slider-height2 d-flex align-items-center"
-        data-background="/User/assets/img/hero/about.jpg">
-        <div class="container">
-            <div class="row">
-                <div class="col-xl-12">
-                    <div class="hero-cap text-center">
-                        <h2>{{job()?.jobTitle}}</h2>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-<!-- Hero Area End -->
 <!-- job post company Start -->
 <div class="job-post-company pt-120 pb-120">
     <div class="container">
         <div class="row justify-content-between">
             <!-- Left Content -->
-            <div class="col-xl-7 col-lg-8">
+            <div class="col-xl-8 col-lg-8">
                 <!-- job single -->
-                <div class="single-job-items mb-50">
-                    <div class="job-items">
+                <div class="single-job-items mb-50 border">
+                    <div class="job-items ">
                         <div class="company-img company-img-details">
                             <a href="#"><img [src]="'https://localhost:7147/'+job()?.campusLogoUrl" width="85px"
                                     class="border border-primary" alt=""></a>
                         </div>
                         <div class="job-tittle">
                             <a href="#">
-                                <h4>{{job()?.jobTitle}}r</h4>
+                                <h4>{{job()?.jobTitle}}</h4>
                             </a>
                             <ul>
                                 <li>{{job()?.departmentName}}</li>
@@ -98,22 +82,37 @@
                         <h4>Job Overview</h4>
                     </div>
                     <ul>
-                        <li>Posted date : <span>{{job()?.publishedOn | date}}</span></li>
-                        <li>Location : <span>{{job()?.campusName}}</span></li>
-                        <li>Experience : <span>{{job()?.experience}}</span></li>
-                        <li>Gender : <span>{{job()?.gender}}</span></li>
-                        <li>Vacancy : <span>{{job()?.vacancy}}</span></li>
-                        <li>Job nature : <span>{{job()?.employmentStatus}}</span></li>
-                        <li>Salary : <span>{{job()?.salary}}</span></li>
-                        <li>Application date : <span>{{job()?.applicationDeadline | date}}</span></li>
+                        <li>Posted Date: <span>{{job()?.publishedOn | date}}</span></li>
+                        <li>Location: <span>{{job()?.campusName}}</span></li>
+                        <li>Experience: <span>{{job()?.experience}}</span></li>
+                        <li>Gender: <span>{{job()?.gender}}</span></li>
+                        <li>Vacancy: <span>{{job()?.vacancy}}</span></li>
+                        <li>Job Nature: <span>{{job()?.employmentStatus}}</span></li>
+                        <li>Salary: <span>{{job()?.salary}}</span></li>
+                        <li>Application Date: <span>{{job()?.applicationDeadline | date}}</span></li>
                     </ul>
                     <div class="apply-btn2">
+
+                        @if (!isDeadlinePassed) {
+
                         @if (isApplied) {
-                        <button type="submit" class="btn" disabled>Applied</button>
+                        <button class="btn" disabled>
+                            Applied
+                        </button>
                         }
-                        @else{
-                        <button type="button" (click)="AddApplication()" class="btn">Apply Now</button>
+                        @else {
+                        <button class="btn" (click)="AddApplication()">
+                            Apply Now
+                        </button>
                         }
+
+                        }
+                        @else {
+                        <button class="btn" disabled>
+                            Deadline Passed
+                        </button>
+                        }
+
                     </div>
                 </div>
                 <div class="post-details4  mb-50">

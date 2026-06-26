@@ -36,6 +36,19 @@ export class JobDetails implements OnInit {
   UserId: number = 0;
   isApplied: boolean = false;
 
+
+  // Returns true if the application deadline has passed
+  get isDeadlinePassed(): boolean {
+    const job = this.job();
+
+    if (!job) {
+      return false;
+    }
+
+    return new Date(job.applicationDeadline).getTime() < Date.now();
+  }
+
+
   // APIs Methods
   GetJobById(id: number): void {
     this.JobId = id;
@@ -66,7 +79,7 @@ export class JobDetails implements OnInit {
   AddApplication(): void {
 
     if (this.auth.isLoggedIn()) {
-      
+
       const model = {
         jobId: this.JobId,
         candidateId: this.UserId

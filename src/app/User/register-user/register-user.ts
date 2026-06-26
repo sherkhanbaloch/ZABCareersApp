@@ -22,9 +22,9 @@ export class RegisterUser {
       candidateEmail: new FormControl('', Validators.required),
       candidatePassword: new FormControl('', Validators.required),
       candidateMobile: new FormControl('', Validators.required),
-      candidateResume: new FormControl(null, Validators.required),
-      candidateResumeUrl: new FormControl('', Validators.required),
-      resumeLastUpdated: new FormControl('', Validators.required),
+      candidateResume: new FormControl(null),
+      candidateResumeUrl: new FormControl(''),
+      resumeLastUpdated: new FormControl(''),
     }
   );
 

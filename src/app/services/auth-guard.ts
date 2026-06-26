@@ -10,14 +10,16 @@ export const authGuard: CanActivateFn = (route, state) => {
   const requiredRole = route.data['role'];
   const userRole = auth.getUserRole();
 
-  if (!auth.isLoggedIn()) {
-    if (state.url.startsWith('/admin')) {
-      router.navigate(['/admin/login']);
-    } else {
-      router.navigate(['/user/user-login']);
-    }
+if (!auth.isLoggedIn()) {
+
+    router.navigate([
+        state.url.startsWith('/admin')
+            ? '/admin/login'
+            : '/user/user-login'
+    ]);
+
     return false;
-  }
+}
 
   // 🔥 Role-based check
   if (requiredRole && userRole !== requiredRole) {

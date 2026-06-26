@@ -31,7 +31,14 @@ export class AuthService {
     const decoded: any = jwtDecode(token);
     const expiry = decoded.exp * 1000;
 
-    return Date.now() < expiry;
+    if (Date.now() >= expiry) {
+
+      this.logout();
+
+      return false;
+    }
+
+    return true;
   }
 
   // Getting User Id

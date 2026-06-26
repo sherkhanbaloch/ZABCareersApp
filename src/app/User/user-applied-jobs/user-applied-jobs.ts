@@ -26,6 +26,8 @@ export class UserAppliedJobs {
   UserId: number = 0;
   UserName: string | null = '';
   ListOfJobs = signal<AppliedJobVM[]>([]);
+  AppliedJobId: number = 0;
+
 
 
   // APIs Methods
@@ -41,6 +43,24 @@ export class UserAppliedJobs {
       }
     );
   }
+
+  WithdrawJob(appliedJobId: number): void {
+    this.AppliedJobId = appliedJobId;
+    this.http.delete(`https://localhost:7147/api/AppliedJob/WithdrawJob/${this.AppliedJobId}`, { responseType: 'text' }).subscribe(
+      {
+        next: (res) => {
+          console.log(res);
+          this.toastr.success("Job Withdraw.", 'Success', { closeButton: true });
+          this.ShowAppliedJobs();
+        },
+        error: (err) => {
+          console.log(err);
+          this.toastr.error("Error - " + err.error, 'Error', { closeButton: true });
+        }
+      }
+    );
+  }
+
 
 }
 
