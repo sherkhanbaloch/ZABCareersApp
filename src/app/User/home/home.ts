@@ -17,10 +17,12 @@ export class Home implements OnInit {
 
   ngOnInit(): void {
     this.ShowAllJobs();
+    this.ShowAllDepartments();
   }
 
   // Variables
   ListofJobs = signal<JobVM[]>([]);
+  ListofDepartments = signal<DepartmentVM[]>([]);
 
   // APIs Methods
   ShowAllJobs(): void {
@@ -30,7 +32,20 @@ export class Home implements OnInit {
           this.ListofJobs.set(res);
         },
         error: (err) => {
-           this.toastr.error("Error - " + err.error, 'Error', { closeButton: true });
+          this.toastr.error("Error - " + err.error, 'Error', { closeButton: true });
+        }
+      }
+    );
+  }
+
+  ShowAllDepartments(): void {
+    this.http.get<DepartmentVM[]>('https://localhost:7147/api/Departments/GetTotalJobsWithDepartments/').subscribe(
+      {
+        next: (res) => {
+          this.ListofDepartments.set(res);
+        },
+        error: (err) => {
+          this.toastr.error("Error - " + err.error, 'Error', { closeButton: true });
         }
       }
     );
@@ -38,13 +53,20 @@ export class Home implements OnInit {
 
 }
 
+// Interfaces
 export interface JobVM {
-    jobId: number;
-    campusLogoUrl: string;
-    jobTitle: string;
-    departmentName: string;
-    campusName: string;
-    salary: string;
-    employmentStatus: string;
-    publishedOn: string;
+  jobId: number;
+  campusLogoUrl: string;
+  jobTitle: string;
+  departmentName: string;
+  campusName: string;
+  salary: string;
+  employmentStatus: string;
+  publishedOn: string;
+}
+
+export interface DepartmentVM {
+  departmentId: number;
+  departmentName: string;
+  totalJobs: number;
 }
