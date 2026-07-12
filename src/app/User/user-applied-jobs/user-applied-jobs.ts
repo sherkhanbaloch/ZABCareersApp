@@ -3,6 +3,7 @@ import { Component, signal } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
 import { AuthService } from '../../services/auth-service';
 import { DatePipe } from '@angular/common';
+import { environment } from '../../../environments/environment';
 
 @Component({
   selector: 'app-user-applied-jobs',
@@ -32,7 +33,7 @@ export class UserAppliedJobs {
 
   // APIs Methods
   ShowAppliedJobs(): void {
-    this.http.get<AppliedJobVM[]>(`https://localhost:7147/api/AppliedJob/GetAppliedJobsForUser/${this.UserId}`).subscribe(
+    this.http.get<AppliedJobVM[]>(`${environment.apiUrl}/AppliedJob/GetAppliedJobsForUser/${this.UserId}`).subscribe(
       {
         next: (res) => {
           this.ListOfJobs.set(res);
@@ -46,7 +47,7 @@ export class UserAppliedJobs {
 
   WithdrawJob(appliedJobId: number): void {
     this.AppliedJobId = appliedJobId;
-    this.http.delete(`https://localhost:7147/api/AppliedJob/WithdrawJob/${this.AppliedJobId}`, { responseType: 'text' }).subscribe(
+    this.http.delete(`${environment.apiUrl}/AppliedJob/WithdrawJob/${this.AppliedJobId}`, { responseType: 'text' }).subscribe(
       {
         next: (res) => {
           console.log(res);

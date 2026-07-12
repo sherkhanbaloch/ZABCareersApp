@@ -4,6 +4,7 @@ import { Component, OnInit, computed, signal } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { FormsModule } from '@angular/forms';
+import { environment } from '../../../environments/environment';
 
 @Component({
   selector: 'app-resume-analysis',
@@ -94,7 +95,7 @@ export class ResumeAnalysis implements OnInit {
     if (!url) {
       return null;
     }
-    return `https://localhost:7147${url.startsWith('/') ? '' : '/'}${url}`;
+    return `${environment.apiUrl}${url.startsWith('/') ? '' : '/'}${url}`;
   });
 
 
@@ -102,7 +103,7 @@ export class ResumeAnalysis implements OnInit {
   GetResumeAnalysis(id: number): void {
     this.loading.set(true);
     this.ApplyJobId = id;
-    this.http.get<ResumeDetails>(`https://localhost:7147/api/ResumeAnalysis/GetResumeAnalysis/${this.ApplyJobId}`).subscribe(
+    this.http.get<ResumeDetails>(`${environment.apiUrl}/ResumeAnalysis/GetResumeAnalysis/${this.ApplyJobId}`).subscribe(
       {
         next: (res) => {
           this.resumeDetails.set(res);
@@ -201,7 +202,7 @@ ${this.resumeDetails()?.campusName}`;
 
     };
 
-    this.http.post('https://localhost:7147/api/EmailAccount/SendEmail', model).subscribe({
+    this.http.post(`${environment.apiUrl}/EmailAccount/SendEmail`, model).subscribe({
       next: () => {
 
         // Hide Modal Programmatically
@@ -231,7 +232,7 @@ ${this.resumeDetails()?.campusName}`;
   }
 
   ChangeApplicationStatus(status: string): void {
-    this.http.put(`https://localhost:7147/api/AppliedJob/ChangeApplicationStatus/${this.ApplyJobId}/${status}`, {}).subscribe(
+    this.http.put(`${environment.apiUrl}/AppliedJob/ChangeApplicationStatus/${this.ApplyJobId}/${status}`, {}).subscribe(
       {
         next: (res) => {
           this.GetResumeAnalysis(this.ApplyJobId);

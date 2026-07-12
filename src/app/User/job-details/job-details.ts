@@ -5,6 +5,7 @@ import { FormControl, FormControlName, FormGroup } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService } from '../../services/auth-service';
 import { ToastrService } from 'ngx-toastr';
+import { environment } from '../../../environments/environment';
 
 @Component({
   selector: 'app-job-details',
@@ -52,7 +53,7 @@ export class JobDetails implements OnInit {
   // APIs Methods
   GetJobById(id: number): void {
     this.JobId = id;
-    this.http.get<JobDetails>(`https://localhost:7147/api/Jobs/GetJobDetailsForUser/${this.JobId}`).subscribe(
+    this.http.get<JobDetails>(`${environment.apiUrl}/Jobs/GetJobDetailsForUser/${this.JobId}`).subscribe(
       {
         next: (res) => {
           this.job.set(res);
@@ -65,7 +66,7 @@ export class JobDetails implements OnInit {
   }
 
   CheckIsApplied(): void {
-    this.http.get<boolean>(`https://localhost:7147/api/AppliedJob/GetIsJobApplied/${this.JobId}/${this.UserId}`)
+    this.http.get<boolean>(`${environment.apiUrl}/AppliedJob/GetIsJobApplied/${this.JobId}/${this.UserId}`)
       .subscribe({
         next: (res) => {
           this.isApplied = res;
@@ -85,7 +86,7 @@ export class JobDetails implements OnInit {
         candidateId: this.UserId
       };
 
-      this.http.post('https://localhost:7147/api/AppliedJob/AddApplication', model).subscribe(
+      this.http.post(`${environment.apiUrl}/AppliedJob/AddApplication`, model).subscribe(
         {
           next: (res) => {
             this.toastr.success("Job Applied", 'Success', { closeButton: true });

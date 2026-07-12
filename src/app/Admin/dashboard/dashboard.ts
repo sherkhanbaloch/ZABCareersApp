@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit, signal } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
+import { environment } from '../../../environments/environment';
 
 @Component({
   selector: 'app-dashboard',
@@ -22,7 +23,7 @@ export class Dashboard implements OnInit {
 
   // APIs Methods
   GetDashboardData(): void {
-    this.http.get<DashboardData>(`https://localhost:7147/api/Dashboard/GetDashboardData/`).subscribe(
+    this.http.get<DashboardData>(`${environment.apiUrl}/Dashboard/GetDashboardData/`).subscribe(
       {
         next: (res) => {
           this.data.set(res);

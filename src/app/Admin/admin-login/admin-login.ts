@@ -5,6 +5,7 @@ import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import { Router } from '@angular/router';
 import { AuthService } from '../../services/auth-service';
 import { ToastrService } from 'ngx-toastr';
+import { environment } from '../../../environments/environment';
 
 @Component({
   selector: 'app-admin-login',
@@ -25,7 +26,7 @@ export class AdminLogin {
   );
 
   AdminLogin(): void {
-    this.http.post('https://localhost:7147/api/Auth/AdminLogin', this.LoginForm.value, { responseType: 'text' }).subscribe(
+    this.http.post(`${environment.apiUrl}/Auth/AdminLogin`, this.LoginForm.value, { responseType: 'text' }).subscribe(
       {
         next: (res) => {
           this.auth.setToken(res);
@@ -46,7 +47,5 @@ export class AdminLogin {
   get loginForm() {
     return this.LoginForm.controls;
   }
-
-
 
 }

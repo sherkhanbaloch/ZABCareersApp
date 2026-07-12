@@ -3,6 +3,7 @@ import { Component, OnInit, signal } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
 import { NgIf } from '@angular/common';
+import { environment } from '../../../environments/environment';
 
 @Component({
   selector: 'app-campuses',
@@ -47,7 +48,7 @@ export class Campuses implements OnInit {
 
   // APIs Methods
   ShowAllCampuses(): void {
-    this.http.get<CampusVM[]>('https://localhost:7147/api/Campus/GetAllCampuses/').subscribe(
+    this.http.get<CampusVM[]>(`${environment.apiUrl}/Campus/GetAllCampuses/`).subscribe(
       {
         next: (res) => {
           this.ListofCampuses.set(res);
@@ -66,7 +67,7 @@ export class Campuses implements OnInit {
     formData.append('CampusLogo', this.selectedFile);
     formData.append('CampusLocation', this.AddCampusForm.value.campusLocation!);
 
-    this.http.post('https://localhost:7147/api/Campus/AddCampus', formData)
+    this.http.post(`${environment.apiUrl}/Campus/AddCampus`, formData)
       .subscribe({
         next: (res) => {
           this.toastr.success("Campus Added.", 'Success', { closeButton: true });
@@ -86,7 +87,7 @@ export class Campuses implements OnInit {
 
   GetCampusById(id: number): void {
     this.CampusId = id;
-    this.http.get<any>(`https://localhost:7147/api/Campus/GetCampusByID/${this.CampusId}`).subscribe(
+    this.http.get<any>(`${environment.apiUrl}/Campus/GetCampusByID/${this.CampusId}`).subscribe(
       {
         next: (res) => {
           const ResData = res;
@@ -110,7 +111,7 @@ export class Campuses implements OnInit {
     
     formData.append('CampusLocation', this.EditCampusForm.value.campusLocation!);
 
-    this.http.put(`https://localhost:7147/api/Campus/UpdateCampus/${this.CampusId}`, formData).subscribe(
+    this.http.put(`${environment.apiUrl}/Campus/UpdateCampus/${this.CampusId}`, formData).subscribe(
       {
         next: (res) => {
           this.toastr.success("Campus Updated.", 'Success', { closeButton: true });
@@ -125,7 +126,7 @@ export class Campuses implements OnInit {
   }
 
   DeleteCampus(): void {
-    this.http.delete(`https://localhost:7147/api/Campus/DeleteCampus/${this.CampusId}`).subscribe(
+    this.http.delete(`${environment.apiUrl}/Campus/DeleteCampus/${this.CampusId}`).subscribe(
       {
         next: (res) => {
           this.toastr.success("Campus Deleted.", 'Success', { closeButton: true });

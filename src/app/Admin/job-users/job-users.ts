@@ -2,6 +2,7 @@ import { DatePipe } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit, signal } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
+import { environment } from '../../../environments/environment';
 
 @Component({
   selector: 'app-job-users',
@@ -24,7 +25,7 @@ export class JobUsers implements OnInit {
 
   // APIs Methods
   ShowAllJobs(): void {
-    this.http.get<JobUserVM[]>('https://localhost:7147/api/Candidates/GetAllCandidates/').subscribe(
+    this.http.get<JobUserVM[]>(`${environment.apiUrl}/Candidates/GetAllCandidates/`).subscribe(
       {
         next: (res) => {
           this.ListofJobUsers.set(res);
@@ -41,7 +42,7 @@ export class JobUsers implements OnInit {
   }
 
   DeleteJob(): void {
-    this.http.delete(`https://localhost:7147/api/Candidates/DeleteCandidate/${this.UserId}`).subscribe(
+    this.http.delete(`${environment.apiUrl}/Candidates/DeleteCandidate/${this.UserId}`).subscribe(
       {
         next: (res) => {
            this.toastr.success("Candidate Deleted.", 'Success', { closeButton: true });

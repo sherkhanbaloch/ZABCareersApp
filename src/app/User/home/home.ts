@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Component, OnInit, signal } from '@angular/core';
 import { RouterLink } from "@angular/router";
 import { ToastrService } from 'ngx-toastr';
+import { environment } from '../../../environments/environment';
 
 @Component({
   selector: 'app-home',
@@ -26,7 +27,7 @@ export class Home implements OnInit {
 
   // APIs Methods
   ShowAllJobs(): void {
-    this.http.get<JobVM[]>('https://localhost:7147/api/Jobs/ViewJobsForUsers/').subscribe(
+    this.http.get<JobVM[]>(`${environment.apiUrl}/Jobs/ViewJobsForUsers/`).subscribe(
       {
         next: (res) => {
           this.ListofJobs.set(res);
@@ -39,7 +40,7 @@ export class Home implements OnInit {
   }
 
   ShowAllDepartments(): void {
-    this.http.get<DepartmentVM[]>('https://localhost:7147/api/Departments/GetTotalJobsWithDepartments/').subscribe(
+    this.http.get<DepartmentVM[]>(`${environment.apiUrl}/Departments/GetTotalJobsWithDepartments/`).subscribe(
       {
         next: (res) => {
           this.ListofDepartments.set(res);

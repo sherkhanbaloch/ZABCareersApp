@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Component, OnInit, signal } from '@angular/core';
 import { RouterLink } from "@angular/router";
 import { ToastrService } from 'ngx-toastr';
+import { environment } from '../../../environments/environment';
 
 @Component({
   selector: 'app-job-applications',
@@ -25,7 +26,7 @@ export class JobApplications implements OnInit {
 
   // APIs Methods
   ShowAllApplications(): void {
-    this.http.get<JobApplicationsVM[]>('https://localhost:7147/api/AppliedJob/GetJobApplications/').subscribe(
+    this.http.get<JobApplicationsVM[]>(`${environment.apiUrl}/AppliedJob/GetJobApplications/`).subscribe(
       {
         next: (res) => {
           this.ListofJobApplications.set(res);

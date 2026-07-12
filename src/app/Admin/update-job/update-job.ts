@@ -4,7 +4,7 @@ import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import { ActivatedRoute, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { NgIf } from '@angular/common';
-
+import { environment } from '../../../environments/environment';
 
 @Component({
   selector: 'app-update-job',
@@ -64,7 +64,7 @@ export class UpdateJob implements OnInit {
   // APIs Methods
 
   LoadDepartments(): void {
-    this.http.get<DepartmentVM[]>('https://localhost:7147/api/Departments/GetAllDepartments/').subscribe(
+    this.http.get<DepartmentVM[]>(`${environment.apiUrl}/Departments/GetAllDepartments/`).subscribe(
       {
         next: (res) => {
           this.ListofDepartments.set(res);
@@ -77,7 +77,7 @@ export class UpdateJob implements OnInit {
   }
 
   LoadCampuses(): void {
-    this.http.get<CampusVM[]>('https://localhost:7147/api/Campus/GetCampusesForDropdown/').subscribe(
+    this.http.get<CampusVM[]>(`${environment.apiUrl}/Campus/GetCampusesForDropdown/`).subscribe(
       {
         next: (res) => {
           this.ListofCampuses.set(res);
@@ -91,7 +91,7 @@ export class UpdateJob implements OnInit {
 
   GetJobById(id: number): void {
     this.JobId = id;
-    this.http.get<any>(`https://localhost:7147/api/Jobs/GetJobByID/${this.JobId}`).subscribe(
+    this.http.get<any>(`${environment.apiUrl}/Jobs/GetJobByID/${this.JobId}`).subscribe(
       {
         next: (res) => {
           const ResData = res;
@@ -126,7 +126,7 @@ export class UpdateJob implements OnInit {
     formData.append('DepartmentId', this.EditJobForm.value.departmentId!);
     formData.append('CampusId', this.EditJobForm.value.campusId!);
 
-    this.http.put(`https://localhost:7147/api/Jobs/UpdateJob/${this.JobId}`, formData)
+    this.http.put(`${environment.apiUrl}/Jobs/UpdateJob/${this.JobId}`, formData)
       .subscribe({
         next: (res) => {
           this.toastr.success("Job Updated.", 'Success', { closeButton: true });

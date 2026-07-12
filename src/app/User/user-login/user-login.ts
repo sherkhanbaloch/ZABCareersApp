@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 import { AuthService } from '../../services/auth-service';
 import { ToastrService } from 'ngx-toastr';
 import { NgIf } from '@angular/common';
+import { environment } from '../../../environments/environment';
 
 @Component({
   selector: 'app-user-login',
@@ -25,7 +26,7 @@ export class UserLogin {
   );
 
   UserLogin(): void {
-    this.http.post('https://localhost:7147/api/Auth/UserLogin', this.LoginForm.value, { responseType: 'text' }).subscribe(
+    this.http.post(`${environment.apiUrl}/Auth/UserLogin`, this.LoginForm.value, { responseType: 'text' }).subscribe(
       {
         next: (res) => {
           this.auth.setToken(res);

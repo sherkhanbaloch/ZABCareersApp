@@ -4,6 +4,7 @@ import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import { ActivatedRoute, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { NgIf } from '@angular/common';
+import { environment } from '../../../environments/environment';
 
 @Component({
   selector: 'app-user-email-verify',
@@ -38,7 +39,7 @@ export class UserEmailVerify implements OnInit {
       otp: this.VerifyForm.value.OTPNumber
     };
 
-    this.http.post<any>('https://localhost:7147/api/Auth/UserOTPVerify', model).subscribe(
+    this.http.post<any>(`${environment.apiUrl}/Auth/UserOTPVerify`, model).subscribe(
       {
         next: (res) => {
           this.toastr.success("OTP Verified.", 'Success', { closeButton: true });

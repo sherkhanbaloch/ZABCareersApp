@@ -4,6 +4,7 @@ import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { NgIf } from '@angular/common';
+import { environment } from '../../../environments/environment';
 
 @Component({
   selector: 'app-register-user',
@@ -47,7 +48,7 @@ export class RegisterUser {
     formData.append('CandidateResume', this.selectedFile);
     formData.append('ResumeLastUpdated', date.toDateString());
 
-    this.http.post('https://localhost:7147/api/Candidates/AddCandidate/', formData)
+    this.http.post(`${environment.apiUrl}/Candidates/AddCandidate/`, formData)
       .subscribe({
         next: (res) => {
           this.toastr.success("User Registered. Verify Your Email.", 'Success', { closeButton: true });

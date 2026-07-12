@@ -4,6 +4,7 @@ import { Component, signal } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { AuthService } from '../../services/auth-service';
 import { ToastrService } from 'ngx-toastr';
+import { environment } from '../../../environments/environment';
 
 @Component({
   selector: 'app-user-profile',
@@ -47,7 +48,7 @@ export class UserProfile {
 
   // APIs Methods
   GetCandidateByID(id: number): void {
-    this.http.get<any>(`https://localhost:7147/api/Candidates/GetCandidateByID/${this.UserId}`).subscribe(
+    this.http.get<any>(`${environment.apiUrl}/Candidates/GetCandidateByID/${this.UserId}`).subscribe(
       {
         next: (res) => {
           const ResData = res;
@@ -75,7 +76,7 @@ export class UserProfile {
       formData.append('ResumeLastUpdated', date.toDateString());
     }
 
-    this.http.put(`https://localhost:7147/api/Candidates/UpdateCandidate/${this.UserId}`, formData)
+    this.http.put(`${environment.apiUrl}/Candidates/UpdateCandidate/${this.UserId}`, formData)
       .subscribe({
         next: (res) => {
           this.toastr.success("Profile Updated.", 'Success', { closeButton: true });

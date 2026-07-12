@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Component, OnInit, signal } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
+import { environment } from '../../../environments/environment';
 
 @Component({
   selector: 'app-departments',
@@ -37,7 +38,7 @@ export class Departments implements OnInit {
 
   // APIs Methods
   ShowAllDepartments(): void {
-    this.http.get<DepartmentVM[]>('https://localhost:7147/api/Departments/GetAllDepartments/').subscribe(
+    this.http.get<DepartmentVM[]>(`${environment.apiUrl}/Departments/GetAllDepartments/`).subscribe(
       {
         next: (res) => {
           this.ListofDepartments.set(res);
@@ -50,7 +51,7 @@ export class Departments implements OnInit {
   }
 
   SaveDepartment(): void {
-    this.http.post('https://localhost:7147/api/Departments/AddDepartment/', this.AddDepartmentForm.value).subscribe(
+    this.http.post(`${environment.apiUrl}/Departments/AddDepartment/`, this.AddDepartmentForm.value).subscribe(
       {
         next: (res) => {
           this.toastr.success("Department Added.", 'Success', { closeButton: true });
@@ -70,7 +71,7 @@ export class Departments implements OnInit {
 
   GetDepartmentById(id: number): void {
     this.DepartmentId = id;
-    this.http.get<any>(`https://localhost:7147/api/Departments/GetDepartmentByID/${this.DepartmentId}`).subscribe(
+    this.http.get<any>(`${environment.apiUrl}/Departments/GetDepartmentByID/${this.DepartmentId}`).subscribe(
       {
         next: (res) => {
           const ResData = res;
@@ -84,7 +85,7 @@ export class Departments implements OnInit {
   }
 
   UpdateDepartment(): void {
-    this.http.put(`https://localhost:7147/api/Departments/UpdateDepartment/${this.DepartmentId}`, this.EditDepartmentForm.value).subscribe(
+    this.http.put(`${environment.apiUrl}/Departments/UpdateDepartment/${this.DepartmentId}`, this.EditDepartmentForm.value).subscribe(
       {
         next: (res) => {
           this.toastr.success("Department Updated.", 'Success', { closeButton: true });
@@ -99,7 +100,7 @@ export class Departments implements OnInit {
   }
 
   DeleteDepartment(): void {
-    this.http.delete(`https://localhost:7147/api/Departments/DeleteDepartment/${this.DepartmentId}`).subscribe(
+    this.http.delete(`${environment.apiUrl}/Departments/DeleteDepartment/${this.DepartmentId}`).subscribe(
       {
         next: (res) => {
           this.toastr.success("Department Deleted.", 'Success', { closeButton: true });

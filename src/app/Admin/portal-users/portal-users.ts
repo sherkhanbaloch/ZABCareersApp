@@ -3,6 +3,7 @@ import { Component, OnInit, signal } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
 import { NgIf } from '@angular/common';
+import { environment } from '../../../environments/environment';
 
 @Component({
   selector: 'app-portal-users',
@@ -50,7 +51,7 @@ export class PortalUsers implements OnInit {
 
   // APIs Methods
   LoadRoles(): void {
-    this.http.get<RolesVM[]>('https://localhost:7147/api/Roles/GetAllRoles/').subscribe(
+    this.http.get<RolesVM[]>(`${environment.apiUrl}/Roles/GetAllRoles/`).subscribe(
       {
         next: (res) => {
           this.ListofRoles.set(res);
@@ -63,7 +64,7 @@ export class PortalUsers implements OnInit {
   }
 
   LoadCampuses(): void {
-    this.http.get<CampusVM[]>('https://localhost:7147/api/Campus/GetCampusesForDropdown/').subscribe(
+    this.http.get<CampusVM[]>(`${environment.apiUrl}/Campus/GetCampusesForDropdown/`).subscribe(
       {
         next: (res) => {
           this.ListofCampuses.set(res);
@@ -76,7 +77,7 @@ export class PortalUsers implements OnInit {
   }
 
   ShowAllUsers(): void {
-    this.http.get<UsersVM[]>('https://localhost:7147/api/Users/GetAllUsers/').subscribe(
+    this.http.get<UsersVM[]>(`${environment.apiUrl}/Users/GetAllUsers/`).subscribe(
       {
         next: (res) => {
           this.ListofUsers.set(res);
@@ -89,7 +90,7 @@ export class PortalUsers implements OnInit {
   }
 
   SaveUser(): void {
-    this.http.post('https://localhost:7147/api/Users/AddUser/', this.AddUserForm.value).subscribe(
+    this.http.post(`${environment.apiUrl}/Users/AddUser/`, this.AddUserForm.value).subscribe(
       {
         next: (res) => {
           this.toastr.success("User Added.", 'Success', { closeButton: true });
@@ -109,7 +110,7 @@ export class PortalUsers implements OnInit {
 
   GetUserById(id: number): void {
     this.UserId = id;
-    this.http.get<any>(`https://localhost:7147/api/Users/GetUserByID/${this.UserId}`).subscribe(
+    this.http.get<any>(`${environment.apiUrl}/Users/GetUserByID/${this.UserId}`).subscribe(
       {
         next: (res) => {
           const ResData = res;
@@ -123,7 +124,7 @@ export class PortalUsers implements OnInit {
   }
 
   UpdateUser(): void {
-    this.http.put(`https://localhost:7147/api/Users/UpdateUser/${this.UserId}`, this.EditUserForm.value).subscribe(
+    this.http.put(`${environment.apiUrl}/Users/UpdateUser/${this.UserId}`, this.EditUserForm.value).subscribe(
       {
         next: (res) => {
           this.toastr.success("User Updated.", 'Success', { closeButton: true });
@@ -138,7 +139,7 @@ export class PortalUsers implements OnInit {
   }
 
   DeleteUser(): void {
-    this.http.delete(`https://localhost:7147/api/Users/DeleteUser/${this.UserId}`).subscribe(
+    this.http.delete(`${environment.apiUrl}/Users/DeleteUser/${this.UserId}`).subscribe(
       {
         next: (res) => {
           this.toastr.success("User Deleted.", 'Success', { closeButton: true });

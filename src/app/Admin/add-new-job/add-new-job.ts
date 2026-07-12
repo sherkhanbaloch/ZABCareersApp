@@ -4,6 +4,7 @@ import { publishFacade } from '@angular/compiler';
 import { Component, OnInit, signal } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
+import { environment } from '../../../environments/environment';
 
 @Component({
   selector: 'app-add-new-job',
@@ -54,7 +55,7 @@ export class AddNewJob {
 
   // APIs Methods
   LoadDepartments(): void {
-    this.http.get<DepartmentVM[]>('https://localhost:7147/api/Departments/GetAllDepartments/').subscribe(
+    this.http.get<DepartmentVM[]>(`${environment.apiUrl}/Departments/GetAllDepartments/`).subscribe(
       {
         next: (res) => {
           this.ListofDepartments.set(res);
@@ -67,7 +68,7 @@ export class AddNewJob {
   }
 
   LoadCampuses(): void {
-    this.http.get<CampusVM[]>('https://localhost:7147/api/Campus/GetCampusesForDropdown/').subscribe(
+    this.http.get<CampusVM[]>(`${environment.apiUrl}/Campus/GetCampusesForDropdown/`).subscribe(
       {
         next: (res) => {
           this.ListofCampuses.set(res);
@@ -99,7 +100,7 @@ export class AddNewJob {
     formData.append('CampusId', this.AddJobForm.value.campusId!);
     formData.append('DepartmentId', this.AddJobForm.value.departmentId!);
 
-    this.http.post('https://localhost:7147/api/Jobs/AddJob/', formData)
+    this.http.post(`${environment.apiUrl}/Jobs/AddJob/`, formData)
       .subscribe({
         next: (res) => {
           this.toastr.success("Job Added.", 'Success', { closeButton: true });

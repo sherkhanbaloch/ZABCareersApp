@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Component, OnInit, Pipe, signal } from '@angular/core';
 import { RouterLink } from "@angular/router";
 import { ToastrService } from 'ngx-toastr';
+import { environment } from '../../../environments/environment';
 
 @Component({
   selector: 'app-all-jobs',
@@ -25,7 +26,7 @@ export class AllJobs implements OnInit {
 
   // APIs Methods
   ShowAllJobs(): void {
-    this.http.get<JobListVM[]>('https://localhost:7147/api/Jobs/ViewJobsForAdmin/').subscribe(
+    this.http.get<JobListVM[]>(`${environment.apiUrl}/Jobs/ViewJobsForAdmin/`).subscribe(
       {
         next: (res) => {
           this.ListofJobs.set(res);
@@ -42,7 +43,7 @@ export class AllJobs implements OnInit {
   }
 
   DeleteJob(): void {
-    this.http.delete(`https://localhost:7147/api/Jobs/DeleteJob/${this.JobId}`).subscribe(
+    this.http.delete(`${environment.apiUrl}/Jobs/DeleteJob/${this.JobId}`).subscribe(
       {
         next: (res) => {
           this.toastr.success("Job Deleted.", 'Success', { closeButton: true });

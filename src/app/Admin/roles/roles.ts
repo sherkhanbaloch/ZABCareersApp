@@ -3,6 +3,7 @@ import { Component, OnInit, signal } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
 import { NgIf } from '@angular/common';
+import { environment } from '../../../environments/environment';
 
 
 @Component({
@@ -38,7 +39,7 @@ export class Roles implements OnInit {
 
   // APIs Methods
   ShowAllRoles(): void {
-    this.http.get<RoleVM[]>('https://localhost:7147/api/Roles/GetAllRoles/').subscribe(
+    this.http.get<RoleVM[]>(`${environment.apiUrl}/Roles/GetAllRoles/`).subscribe(
       {
         next: (res) => {
           this.ListofRoles.set(res);
@@ -51,7 +52,7 @@ export class Roles implements OnInit {
   }
 
   SaveRole(): void {
-    this.http.post('https://localhost:7147/api/Roles/AddRole/', this.AddRoleForm.value).subscribe(
+    this.http.post(`${environment.apiUrl}/Roles/AddRole/`, this.AddRoleForm.value).subscribe(
       {
         next: (res) => {
           this.toastr.success("Role Added.", 'Success', { closeButton: true });
@@ -71,7 +72,7 @@ export class Roles implements OnInit {
 
   GetRoleById(id: number): void {
     this.RoleId = id;
-    this.http.get<any>(`https://localhost:7147/api/Roles/GetRoleByID/${this.RoleId}`).subscribe(
+    this.http.get<any>(`${environment.apiUrl}/Roles/GetRoleByID/${this.RoleId}`).subscribe(
       {
         next: (res) => {
           const ResData = res;
@@ -85,7 +86,7 @@ export class Roles implements OnInit {
   }
 
   UpdateRole(): void {
-    this.http.put(`https://localhost:7147/api/Roles/UpdateRole/${this.RoleId}`, this.EditRoleForm.value).subscribe(
+    this.http.put(`${environment.apiUrl}/Roles/UpdateRole/${this.RoleId}`, this.EditRoleForm.value).subscribe(
       {
         next: (res) => {
           this.toastr.success("Role Updated.", 'Success', { closeButton: true });
@@ -100,7 +101,7 @@ export class Roles implements OnInit {
   }
 
   DeleteRole(): void {
-    this.http.delete(`https://localhost:7147/api/Roles/DeleteRole/${this.RoleId}`).subscribe(
+    this.http.delete(`${environment.apiUrl}/Roles/DeleteRole/${this.RoleId}`).subscribe(
       {
         next: (res) => {
           this.toastr.success("Role Deleted.", 'Success', { closeButton: true });

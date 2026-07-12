@@ -3,7 +3,7 @@ import { Component } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
 import { NgIf } from '@angular/common';
-
+import { environment } from '../../../environments/environment';
 
 @Component({
   selector: 'app-contact',
@@ -27,7 +27,7 @@ export class Contact {
   );
 
   SaveMessage(): void {
-    this.http.post('https://localhost:7147/api/Messages/AddMessage/', this.AddMessageForm.value).subscribe(
+    this.http.post(`${environment.apiUrl}/Messages/AddMessage/`, this.AddMessageForm.value).subscribe(
       {
         next: (res) => {
           this.toastr.success("Message Sent.", 'Success', { closeButton: true });

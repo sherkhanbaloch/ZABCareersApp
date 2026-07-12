@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit, signal } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
+import { environment } from '../../../environments/environment';
 
 @Component({
   selector: 'app-users-messages',
@@ -23,7 +24,7 @@ export class UsersMessages implements OnInit {
 
   // APIs Methods
   ShowAllMessages(): void {
-    this.http.get<MessageVM[]>('https://localhost:7147/api/Messages/GetAllMessages').subscribe(
+    this.http.get<MessageVM[]>(`${environment.apiUrl}/Messages/GetAllMessages`).subscribe(
       {
         next: (res) => {
           this.ListofMessages.set(res);
@@ -40,7 +41,7 @@ export class UsersMessages implements OnInit {
   }
 
   DeleteMessage(): void {
-    this.http.delete(`https://localhost:7147/api/Messages/DeleteMessage/${this.MessageId}`).subscribe(
+    this.http.delete(`${environment.apiUrl}/Messages/DeleteMessage/${this.MessageId}`).subscribe(
       {
         next: (res) => {
           this.toastr.success("Message Deleted.", 'Success', { closeButton: true });

@@ -3,6 +3,7 @@ import { Component, OnInit, signal } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
 import { NgIf } from '@angular/common';
+import { environment } from '../../../environments/environment';
 
 @Component({
   selector: 'app-email-accounts',
@@ -45,7 +46,7 @@ export class EmailAccounts implements OnInit {
 
   // APIs Methods
   ShowAllEmails(): void {
-    this.http.get<EmailAccountVM[]>('https://localhost:7147/api/EmailAccount/GetAllEmails/').subscribe(
+    this.http.get<EmailAccountVM[]>(`${environment.apiUrl}/EmailAccount/GetAllEmails/`).subscribe(
       {
         next: (res) => {
           this.ListofEmails.set(res);
@@ -58,7 +59,7 @@ export class EmailAccounts implements OnInit {
   }
 
   SaveEmail(): void {
-    this.http.post('https://localhost:7147/api/EmailAccount/AddEmail/', this.AddEmailForm.value).subscribe(
+    this.http.post(`${environment.apiUrl}/EmailAccount/AddEmail/`, this.AddEmailForm.value).subscribe(
       {
         next: (res) => {
           this.toastr.success("Email Added", 'Success', { closeButton: true });
@@ -78,7 +79,7 @@ export class EmailAccounts implements OnInit {
 
   GetEmailById(id: number): void {
     this.EmailId = id;
-    this.http.get<any>(`https://localhost:7147/api/EmailAccount/GetEmailByID/${this.EmailId}`).subscribe(
+    this.http.get<any>(`${environment.apiUrl}/EmailAccount/GetEmailByID/${this.EmailId}`).subscribe(
       {
         next: (res) => {
           const ResData = res;
@@ -92,7 +93,7 @@ export class EmailAccounts implements OnInit {
   }
 
   UpdateEmail(): void {
-    this.http.put(`https://localhost:7147/api/EmailAccount/UpdateEmail/${this.EmailId}`, this.EditEmailForm.value).subscribe(
+    this.http.put(`${environment.apiUrl}/EmailAccount/UpdateEmail/${this.EmailId}`, this.EditEmailForm.value).subscribe(
       {
         next: (res) => {
           this.toastr.success("Email Updated.", 'Success', { closeButton: true });
@@ -107,7 +108,7 @@ export class EmailAccounts implements OnInit {
   }
 
   DeleteEmail(): void {
-    this.http.delete(`https://localhost:7147/api/EmailAccount/DeleteEmail/${this.EmailId}`).subscribe(
+    this.http.delete(`${environment.apiUrl}/EmailAccount/DeleteEmail/${this.EmailId}`).subscribe(
       {
         next: (res) => {
           this.toastr.success("Email Deleted.", 'Success', { closeButton: true });
