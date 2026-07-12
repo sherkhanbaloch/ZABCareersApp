@@ -1,4 +1,4 @@
 export const environment = {
   production: true,
-  apiUrl: 'https://api.mywebsite.com/api'
+  apiUrl: 'http://zabcareers.runasp.net/api'
 };
